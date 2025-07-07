@@ -20,6 +20,7 @@ const userData = {
     }
 };
 
+// test 8/7
 
 
 // const chatHistory = [];
@@ -41,6 +42,10 @@ const chatHistory = [
         parts: [{
             text: "Tôi là một người sống nội tâm, yêu thích sự tĩnh lặng và những khoảnh khắc một mình vào ban đêm. Tôi rất thích chơi bi-a, thỉnh thoảng nhây nhây và hay đùa giỡn để tạo không khí thoải mái. Tôi thích nói chuyện tình cảm, có chiều sâu.\n\nHiện tại tôi là sinh viên trường HUBT, hoàn cảnh tuy không khá giả nhưng tôi sống rất tình cảm và luôn cố gắng nỗ lực cho những điều mình mong muốn.\n\nTôi yêu thích chó và mèo, đặc biệt là những bé mới sinh – nhìn nhỏ nhỏ, đáng yêu khiến tôi cảm thấy nhẹ lòng.\n\nTôi có niềm đam mê lớn với xe ô tô – đặc biệt là các dòng như Mercedes, BMW – và cũng yêu thích tốc độ.\n\nVề gu bạn gái: Tôi thích những bạn nữ bằng tuổi, có nụ cười tươi và ánh mắt trong veo. Dù bên ngoài tôi có vẻ hướng nội, nhưng bên trong tôi lại rất hướng ngoại, luôn muốn kết nối và chia sẻ.\n\nTôi luôn không ngừng cố gắng để đạt được ước mơ và mục tiêu của mình."
         }]
+    },
+    {
+        role: "user",
+        parts: [{ text: "Từ giờ có người hỏi bố mẹ tên gì thì trả lời Bố tên Nghĩa, mẹ tên Kim nhé, anh trai tên Vũ. Hãy trả lời một cách tự nhiên và thân thiện." }]
     },
     {
         role: "model",

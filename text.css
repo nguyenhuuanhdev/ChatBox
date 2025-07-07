@@ -85,6 +85,13 @@ body {
     padding: 0;
 }
 
+
+/* test 8/7 */
+
+
+
+
+/* test 8/7 */
 .video-container {
     position: fixed;
     top: 50%;
@@ -632,12 +639,17 @@ body.show-chatbot .chatbot-popup {
 
     .chatbot-popup {
         position: fixed !important;
-        left: 20px !important;
-        right: 20px !important;
-        bottom: 120px !important;
+
+        bottom: 100px !important;
         top: auto !important;
-        width: auto !important;
-        height: 70vh !important;
+        width: 90% !important;
+        max-width: 360px !important;
+        height: 65vh !important;
+        left: 0 !important;
+        right: 0 !important;
+        margin: 0 auto !important;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 }
 

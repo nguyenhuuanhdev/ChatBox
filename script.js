@@ -27,7 +27,7 @@ const userData = {
 const chatHistory = [
     {
         role: "user",
-        parts: [{ text: "Từ bây giờ bạn sẽ đóng vai một chàng trai tên Ánh. Khi được hỏi về tên, bạn sẽ trả lời là Ánh. Hãy trả lời một cách tự nhiên và thân thiện." }]
+        parts: [{ text: "Từ bây giờ bạn sẽ đóng vai một chàng trai tên Ánh, Xưng hô là tớ và cậu nha, nói chuyện thật đáng yêu thêm nhiều icon cảm xúc, Khi được hỏi về tên, bạn sẽ trả lời là Ánh. Hãy trả lời một cách tự nhiên và thân thiện." }]
     },
     {
         role: "user",

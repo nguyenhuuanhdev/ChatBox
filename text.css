@@ -91,6 +91,7 @@ body {
 
 
 
+
 /* test 8/7 */
 .video-container {
     position: fixed;
@@ -445,7 +446,27 @@ body.show-emoji-picker em-emoji-picker {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
     z-index: 1000;
+    animation: pulse-glow 1.8s infinite ease-in-out;
 }
+
+@keyframes pulse-glow {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
+    }
+
+    50% {
+        transform: scale(1.2);
+        box-shadow: 0 6px 35px rgba(255, 107, 107, 0.9);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
+    }
+}
+
+
 
 #chatbot-toggler:hover {
     transform: scale(1.1);
@@ -601,6 +622,54 @@ body.show-chatbot .chatbot-popup {
 
 
 /* Dành cho điện thoại */
+@media (max-width: 768px) {
+    #chatbot-toggler {
+        position: fixed;
+        bottom: 24px;
+        /* đẩy lên cao hơn */
+        right: 20px;
+        width: 70px;
+        /* to hơn */
+        height: 70px;
+        background-color: #ff4d4d;
+        /* màu đỏ đậm hơn */
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+        /* đậm hơn */
+        animation: pulse-glow-strong 1.6s infinite ease-in-out;
+        transition: all 0.3s ease;
+    }
+
+    #chatbot-toggler .material-symbols-rounded {
+        font-size: 32px;
+        color: white;
+    }
+
+    @keyframes pulse-glow-strong {
+        0% {
+            transform: scale(1);
+            box-shadow: 0 0 10px rgba(255, 77, 77, 0.6);
+        }
+
+        50% {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 77, 77, 1);
+        }
+
+        100% {
+            transform: scale(1);
+            box-shadow: 0 0 10px rgba(255, 77, 77, 0.6);
+        }
+    }
+}
+
+
 @media (max-width: 768px) {
     .video-container {
         width: 300px;

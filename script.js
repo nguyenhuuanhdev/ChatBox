@@ -452,7 +452,7 @@ function createHeart() {
 }
 
 // Tạo mưa liên tục
-setInterval(createHeart, 600); // Bạn có thể chỉnh nhanh hơn/slower
+setInterval(createHeart, 1); // Bạn có thể chỉnh nhanh hơn/slower
 
 
 

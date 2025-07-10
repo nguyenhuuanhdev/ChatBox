@@ -60,6 +60,7 @@
     }
 }
 
+
 /* test */
 
 body {
@@ -110,6 +111,107 @@ body {
     padding: 0;
 }
 
+/* test mục nhận quà  */
+/* Nút hộp quà bo tròn */
+#gift-toggle {
+    position: fixed;
+    bottom: 35px;
+    right: 45%;
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6bffb2 0%, #5ac7ee 100%);
+    color: white;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 1000;
+    animation: pulse-glow 1.8s infinite ease-in-out;
+}
+
+/* Popup hộp quà */
+#gift-popup {
+    position: fixed;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    width: 300px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    text-align: center;
+    animation: fadeIn 1.8s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+.gift-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+#close-gift {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+#gift-content button {
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+        /* Gộp luôn translateX */
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        /* Giữ căn giữa */
+    }
+}
+
+
+@keyframes pulse-glow {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(255, 107, 107, 0.4);
+    }
+
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 25px rgba(255, 107, 107, 1);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(255, 107, 107, 0.4);
+    }
+}
+
 /* test 10/7 */
 a {
     text-decoration: none;
@@ -119,9 +221,10 @@ a {
 #center-link {
     position: fixed;
     bottom: 35px;
-    left: calc(50% - 30px);
+    /* left: calc(50% - 30px); ở giữa*/
     /* 30px là nửa width */
-    transform: none;
+    /* transform: none; */
+    left: 45%;
     transform: translateX(-50%);
     width: 60px;
     height: 60px;
@@ -150,6 +253,8 @@ a {
     position: fixed;
     bottom: 35px;
     left: 35px;
+    width: 60px;
+    height: 60px;
     background-color: #ff4f81;
     color: white;
     font-size: 1.8rem;
@@ -708,12 +813,15 @@ body.show-chatbot .chatbot-popup {
 
 
 /* Dành cho điện thoại */
+
+
 @media (max-width: 768px) {
     #chatbot-toggler {
         position: fixed;
         bottom: 24px;
         /* đẩy lên cao hơn */
         right: 20px;
+
         width: 70px;
         /* to hơn */
         height: 70px;
@@ -881,12 +989,42 @@ body.show-chatbot .chatbot-popup {
     #center-link {
         position: fixed;
         bottom: 24px;
-        left: calc(50% - 30px);
-        /* 30px là nửa width */
-        transform: none;
+        /* left: calc(50% - 30px);  nếu về 3 mục*/
+        /* /* 30px là nửa width  */
+        /* transform: none; */
+        /* left: 147pt; */
+        left: 30%;
         transform: translateX(-50%);
-        width: 70px;
-        height: 70px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #6bffb2 0%, #5ac7ee 100%);
+        color: white;
+        font-size: 32px;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 15px rgba(0, 174, 255, 0.6);
+        cursor: pointer;
+        z-index: 9999;
+        transition: all 0.3s ease;
+        animation: pulse-glow-strong 1.6s infinite ease-in-out;
+    }
+}
+
+@media (max-width: 768px) {
+    #gift-toggle {
+        position: fixed;
+        bottom: 24px;
+        /* left: calc(50% - 30px);  nếu về 3 mục*/
+        /* /* 30px là nửa width  */
+        /* transform: none; */
+        /* left: 80pt; */
+        right: 30%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 60px;
         background: linear-gradient(135deg, #6bffb2 0%, #5ac7ee 100%);
         color: white;
         font-size: 32px;

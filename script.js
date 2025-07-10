@@ -125,7 +125,7 @@ const handleOutgoingMessage = (e) => {
 
     // Simulate bot response with thinking indicator after a delay
     setTimeout(() => {
-        const messageContent = `<img src="img/logo.png" alt="Bot Avatar" class="bot-avatar" />
+        const messageContent = `<img src="img/anh1.png" alt="Bot Avatar" class="bot-avatar" />
                 <div class="message-text">
                     <div class="thinking-indicator">
                         <div class="dot"></div>
@@ -438,6 +438,7 @@ function createHeart() {
     heart.classList.add('heart');
     heart.innerText = '💖';
 
+
     // Random vị trí và tốc độ
     heart.style.left = Math.random() * 100 + 'vw';
     heart.style.animationDuration = (2 + Math.random() * 3) + 's';
@@ -451,4 +452,83 @@ function createHeart() {
 }
 
 // Tạo mưa liên tục
-setInterval(createHeart, 300); // Bạn có thể chỉnh nhanh hơn/slower
+setInterval(createHeart, 600); // Bạn có thể chỉnh nhanh hơn/slower
+
+
+
+
+
+// mục nhận quà
+
+const giftToggle = document.getElementById("gift-toggle");
+const giftPopup = document.getElementById("gift-popup");
+const closeGift = document.getElementById("close-gift");
+const giftMessage = document.getElementById("gift-message");
+const receiveGift = document.getElementById("receive-gift");
+
+const messages = [
+    "🎉 Chúc bạn một ngày tràn đầy năng lượng!",
+    "💖 Mong bạn luôn vui vẻ và yêu đời!",
+    "🌟 Chúc bạn gặp nhiều may mắn trong cuộc sống!",
+    "🎁 Món quà nhỏ nhưng đầy yêu thương!",
+    "🚀 Chúc bạn sớm thành công với ước mơ của mình!",
+    "🍀 Chúc bạn luôn gặp điều tốt lành!",
+    "🌈 Cuộc sống luôn rực rỡ như cầu vồng nhé!",
+    "🧸 Gửi bạn một cái ôm ảo thật ấm áp!",
+    "🔥 Hãy tiếp tục cháy hết mình vì đam mê!",
+    "🍵 Nghỉ ngơi một chút, bạn xứng đáng được thư giãn!",
+    "💪 Mọi thử thách rồi sẽ qua, bạn làm được mà!",
+    "✨ Mỗi ngày là một cơ hội mới để tỏa sáng!",
+    "🧠 Hãy tin vào bản thân — bạn tuyệt vời hơn bạn nghĩ!",
+    "🌼 Cười lên nào, thế giới cần nụ cười của bạn!",
+    "🎨 Cuộc sống là bức tranh, bạn là họa sĩ tài ba!",
+    "📖 Hôm nay là một trang mới — viết thật đẹp nhé!",
+    "🕊️ Bình yên sẽ luôn tìm đến với người thiện lành!",
+    "💫 Mỗi khoảnh khắc đều có thể là điều kỳ diệu!",
+    "🌻 Hãy sống chậm lại, yêu thương nhiều hơn!",
+    "🥇 Bạn là người hùng trong câu chuyện của chính mình!",
+    "💌 Một lời nhắn nhỏ: Bạn rất đáng yêu và đặc biệt!",
+    "🌟 Đừng quên bạn đã tiến xa như thế nào rồi nhé!",
+    "🐾 Hãy bước tiếp từng chút, dù là bước nhỏ!",
+    "🎈 Chúc bạn một ngày nhẹ nhàng và đầy tiếng cười!",
+    "🌙 Ngày mai sẽ tốt hơn hôm nay — hãy tin vậy!",
+    "🧁 Tự thưởng cho bản thân một điều ngọt ngào nhé!",
+    "🎶 Cuộc sống có lúc cao trào, có lúc lặng yên — cứ tận hưởng!",
+    "🍰 Ngọt ngào như bánh, dễ thương như bạn!",
+    "💡 Ý tưởng hay sẽ đến khi tâm trí bạn được thả lỏng!",
+    "🎇 Hãy tỏa sáng theo cách của riêng bạn!",
+    "🌙 Ngủ ngon nhé, mai thức dậy với nụ cười nha!",
+    "😴 Chúc bạn có một giấc mơ thật đẹp và bình yên.",
+    "🛌 Đêm nay hãy để mọi mệt mỏi trôi theo giấc ngủ...",
+    "💤 Ngủ ngoan nha, mai là một ngày tuyệt vời khác!",
+    "🌟 Giấc mơ đêm nay sẽ dẫn bạn đến những điều kỳ diệu!",
+    "🌌 Bầu trời đêm chúc bạn một giấc ngủ thật sâu!",
+    "🧸 Cuộn tròn trong chăn và để trái tim được nghỉ ngơi nhé!",
+    "✨ Ngủ sớm để sớm gặp lại những điều tốt đẹp nha!",
+    "🌜 Đêm nay có trăng canh giấc, bạn ngủ ngon nhé!",
+    "💖 Gửi một cái ôm ảo chúc bạn ngủ thật ngon!",
+    "🍀 Chúc bạn hôm nay gặp thật nhiều may mắn!",
+    "🎯 Mọi việc bạn làm hôm nay đều sẽ thuận lợi nhé!",
+    "🌈 May mắn đang mỉm cười với bạn đó!",
+    "🧲 Thu hút mọi điều tốt đẹp và tích cực đến với bạn!",
+    "🔮 Vũ trụ đang sắp xếp những điều tuyệt vời cho bạn!",
+    "✨ Hôm nay là ngày của bạn, mọi điều tốt lành sẽ đến!",
+    "🪄 Chúc bạn luôn được bao quanh bởi điều kỳ diệu!",
+    "🎉 Cứ tự tin bước tiếp, may mắn luôn đồng hành!",
+    "💫 Gặp đúng người, đúng thời điểm, đúng cơ hội!",
+    "🌟 Cơ hội tốt sắp đến rồi, hãy nắm lấy nhé!"
+];
+
+
+giftToggle.onclick = () => {
+    giftPopup.classList.remove("hidden");
+};
+
+closeGift.onclick = () => {
+    giftPopup.classList.add("hidden");
+};
+
+receiveGift.onclick = () => {
+    const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+    giftMessage.innerText = randomMsg;
+};

@@ -17,6 +17,23 @@
 </head>
 
 <body>
+    <!-- test 10/7 -->
+    <!-- Nút mở hộp quà -->
+    <div class="button-row">
+        <button id="gift-toggle">🎁</button>
+
+        <!-- Hộp popup nhận quà -->
+        <div id="gift-popup" class="hidden">
+            <div class="gift-header">
+                <span>🎉 Nhận quà tặng</span>
+                <button id="close-gift">×</button>
+            </div>
+            <div id="gift-content">
+                <p id="gift-message">Bạn muốn nhận một món quà bất ngờ? 🎁</p>
+                <button id="receive-gift">Nhận quà</button>
+            </div>
+        </div>
+    </div>
     <!-- test 8/7 -->
     <audio id="bg-music" src="img/6654184000691.mp4" loop></audio>
     <div id="music-toggle">
@@ -44,7 +61,7 @@
         <div class="chat-header">
             <div class="header-info">
                 <!-- Thay SVG bằng ảnh của bạn -->
-                <img src="/img/logo.png" alt="Logo" class="chatbot-logo" />
+                <img src="/img/anh1.png" alt="Logo" class="chatbot-logo" />
                 <h2 class="logo-text">Chatbot</h2>
             </div>
             <button id="close-chatbot" class="material-symbols-rounded">keyboard_arrow_down</button>
@@ -53,7 +70,7 @@
         <div class="chat-body">
             <div class="message bot-message">
                 <!-- Thay SVG bằng ảnh của bạn cho bot avatar -->
-                <img src="img/logo.png" alt="Bot Avatar" class="bot-avatar" />
+                <img src="img/anh1.png" alt="Bot Avatar" class="bot-avatar" />
                 <!-- prettier-ignore -->
                 <div class="message-text"> Hi cậu nha 🐷👋<br /> Tớ có thể giúp gì cho cậu hôm nay nào 👀? </div>
             </div>

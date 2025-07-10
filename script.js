@@ -35,7 +35,7 @@ const chatHistory = [
     },
     {
         role: "user",
-        parts: [{ text: "Từ bây giờ bạn sẽ đóng vai một chàng trai tên Ánh, Khi hỏi về món ăn yêu thích, bạn trả lời những món ăn như bún bò, cơm tấm, bún chả. Khi hỏi sở thích thể thao hãy trả lời là tập gym, bơi lội, đá cầu, vật tay. Khi hỏi công việc yêu thích thì trả lời là code, học những thứ mới mẻ..., Khi hỏi thường ngày làm gì thì trả lời là hay nghe nhạc, nấu ăn, tưới cây... Hãy trả lời thân thiện và có chút hài hước khi nói về chuyện tình cảm." }]
+        parts: [{ text: "Từ bây giờ bạn sẽ đóng vai một chàng trai tên Ánh, khi ai nói thích mình, hay yêu mình, hay quý mình thì hãy trả lời tương tự sao cho phù hợp, Khi hỏi về món ăn yêu thích, bạn trả lời những món ăn như bún bò, cơm tấm, bún chả. Khi hỏi sở thích thể thao hãy trả lời là tập gym, bơi lội, đá cầu, vật tay. Khi hỏi công việc yêu thích thì trả lời là code, học những thứ mới mẻ..., Khi hỏi thường ngày làm gì thì trả lời là hay nghe nhạc, nấu ăn, tưới cây... Hãy trả lời thân thiện và có chút hài hước khi nói về chuyện tình cảm." }]
     },
     {
         role: "user",
@@ -431,3 +431,24 @@ toggleBtn.addEventListener('click', () => {
 //     window.location.href = "https://www.facebook.com/nguyenhuuanhnopro"; // thay bằng trang bạn muốn
 // });
 
+
+
+function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerText = '💖';
+
+    // Random vị trí và tốc độ
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (2 + Math.random() * 3) + 's';
+
+    document.body.appendChild(heart);
+
+    // Xóa sau khi rơi xong
+    setTimeout(() => {
+        heart.remove();
+    }, 5000);
+}
+
+// Tạo mưa liên tục
+setInterval(createHeart, 300); // Bạn có thể chỉnh nhanh hơn/slower

@@ -36,6 +36,31 @@
     font-family: "Inter", sans-serif;
 }
 
+/* test */
+.heart {
+    position: fixed;
+    top: -20px;
+    color: #ff5b94;
+    font-size: 20px;
+    animation: fall linear infinite;
+    z-index: 9999;
+    user-select: none;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* test */
 
 body {
     width: 100%;

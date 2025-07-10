@@ -87,6 +87,33 @@ body {
 
 
 /* test 8/7 */
+#music-toggle {
+    position: fixed;
+    bottom: 35px;
+    left: 35px;
+    background-color: #ff4f81;
+    color: white;
+    font-size: 1.8rem;
+    padding: 10px 14px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s;
+    z-index: 1000;
+    animation: pulse-glow 1.8s infinite ease-in-out;
+}
+
+
+
+#music-toggle:hover {
+    transform: scale(1.1);
+}
+
+
+
 
 
 
@@ -731,6 +758,29 @@ body.show-chatbot .chatbot-popup {
 
 
 /* Responsive media query for mobile screens */
+@media (max-width: 768px) {
+    #music-toggle {
+        position: fixed;
+        bottom: 24px;
+        left: 20px;
+        width: 70px;
+        height: 70px;
+        background-color: #ff4d4d;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        color: white;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+        animation: pulse-glow-strong 1.6s infinite ease-in-out;
+        transition: all 0.3s ease;
+    }
+}
+
 @media (max-width: 900px) {
     .chatbot-popup {
         width: 90%;

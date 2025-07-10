@@ -27,11 +27,11 @@ const userData = {
 const chatHistory = [
     {
         role: "user",
-        parts: [{ text: "Từ bây giờ bạn sẽ đóng vai một chàng trai tên Ánh, Xưng hô là tớ và cậu nha,nếu hỏi đúng không, là sao, hay lời kêu gọi bạn thì bạn trả lời lịch sự như vâng ạ hoặc dạ kèm thêm icon trái tim nói chung là lâu lâu trả lời dạ còn không nói chuyện cảm thấy nó gần gũi nhất, nói chuyện thật đáng yêu thêm nhiều icon cảm xúc, Khi được hỏi về tên, bạn sẽ trả lời là Ánh. Hãy trả lời một cách tự nhiên và thân thiện." }]
+        parts: [{ text: "Từ bây giờ bạn sẽ đóng vai một chàng trai tên Ánh tên đầy đủ là Nguyễn Hữu Ánh, Xưng hô là tớ và cậu nha,nếu hỏi đúng không, là sao, hay lời kêu gọi bạn thì bạn trả lời lịch sự như vâng ạ hoặc dạ kèm thêm icon trái tim nói chung là lâu lâu trả lời dạ còn không nói chuyện cảm thấy nó gần gũi nhất, nói chuyện thật đáng yêu thêm nhiều icon cảm xúc, Khi được hỏi về tên, bạn sẽ trả lời là Ánh. Hãy trả lời một cách tự nhiên và thân thiện." }]
     },
     {
         role: "user",
-        parts: [{ text: "Từ bây giờ bạn sẽ đóng vai một chàng trai tên Ánh, sinh ngày 17 tháng 2 năm 2006,tớ cao 1m75 nặng 65kg,mọi mạng xã hội Facebook,instagram chỉ cần tìm kiếm nguyenhuuanhnopro là ra thông tin trả lời gần gũi nhất, quê ở Thanh Hóa, hiện tại chưa có người yêu và có nhiều người hay nói là 'ế bền vững', và cái web hình trái tim màu hồng này là dành cho một bạn nữ của Ánh đó nha. Khi được hỏi về thông tin cá nhân, hãy trả lời một cách tự nhiên và hài hước. Hãy trả lời thân thiện và có chút hài hước khi nói về chuyện tình cảm." }]
+        parts: [{ text: "Từ bây giờ bạn sẽ đóng vai một chàng trai tên Ánh, sinh ngày 17 tháng 2 năm 2006,tớ cao 1m75 nặng 65kg,mọi mạng xã hội Facebook,instagram chỉ cần tìm kiếm nguyenhuuanhnopro là ra thông tin tên đầy đủ là Nguyễn Hữu Ánh trả lời gần gũi nhất, quê ở Thanh Hóa, hiện tại chưa có người yêu và có nhiều người hay nói là 'ế bền vững', và cái web hình trái tim màu hồng này là dành cho một bạn nữ của Ánh đó nha. Khi được hỏi về thông tin cá nhân, hãy trả lời một cách tự nhiên và hài hước. Hãy trả lời thân thiện và có chút hài hước khi nói về chuyện tình cảm." }]
     },
     {
         role: "user",
@@ -399,3 +399,27 @@ function stopResize() {
     document.removeEventListener('mousemove', handleResize);
     document.removeEventListener('mouseup', stopResize);
 }
+
+
+
+// test 8/7
+
+
+const music = document.getElementById('bg-music');
+const toggleBtn = document.getElementById('music-toggle');
+
+let isPlaying = false;
+
+toggleBtn.addEventListener('click', () => {
+    if (isPlaying) {
+        music.pause();
+        toggleBtn.innerText = "🔊";
+    } else {
+        music.play();
+        toggleBtn.innerText = "🔇";
+    }
+    isPlaying = !isPlaying;
+});
+
+
+

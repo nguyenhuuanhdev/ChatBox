@@ -111,6 +111,33 @@ body {
     padding: 0;
 }
 
+/* test ảnh góc trên trái */
+.top-left-image {
+    position: absolute;
+    /* Dính vào vị trí màn hình */
+    top: 10px;
+    left: 10px;
+    width: 100px;
+    /* Kích thước ảnh tùy chỉnh */
+    height: auto;
+    z-index: 1;
+    /* Nằm trên cùng */
+    pointer-events: none;
+    /* Không ảnh hưởng tới click chuột */
+}
+
+.top-right-image {
+    position: absolute;
+    /* Dính vào vị trí màn hình */
+    top: 10px;
+    right: 10px;
+    /* Chuyển sang góc phải */
+    width: 100px;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+}
+
 /* test mục nhận quà  */
 /* Nút hộp quà bo tròn */
 #gift-toggle {
@@ -813,7 +840,21 @@ body.show-chatbot .chatbot-popup {
 
 
 /* Dành cho điện thoại */
+@media (max-width: 768px) {
+    .top-left-image {
+        position: absolute;
+        top: 10px;
+        z-index: 1;
+        transition: opacity 0.3s ease;
+    }
 
+    .top-right-image {
+        position: absolute;
+        top: 10px;
+        z-index: 1;
+        transition: opacity 0.3s ease;
+    }
+}
 
 @media (max-width: 768px) {
     #chatbot-toggler {

@@ -122,7 +122,7 @@ body {
     height: auto;
     z-index: 1;
     /* Nằm trên cùng */
-    pointer-events: none;
+    /* pointer-events: none; */
     /* Không ảnh hưởng tới click chuột */
 }
 
@@ -135,7 +135,7 @@ body {
     width: 100px;
     height: auto;
     z-index: 1;
-    pointer-events: none;
+    /* pointer-events: none; */
 }
 
 /* test mục nhận quà  */
@@ -840,21 +840,32 @@ body.show-chatbot .chatbot-popup {
 
 
 /* Dành cho điện thoại */
+
+
 @media (max-width: 768px) {
     .top-left-image {
         position: absolute;
         top: 10px;
+        left: 10px;
         z-index: 1;
+        width: 100px;
+        height: auto;
+        display: block;
         transition: opacity 0.3s ease;
     }
 
     .top-right-image {
         position: absolute;
         top: 10px;
+        right: 10px;
         z-index: 1;
+        width: 100px;
+        height: auto;
+        display: block;
         transition: opacity 0.3s ease;
     }
 }
+
 
 @media (max-width: 768px) {
     #chatbot-toggler {

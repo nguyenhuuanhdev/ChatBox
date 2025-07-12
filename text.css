@@ -1274,7 +1274,8 @@ body.show-chatbot .chatbot-popup {
         transform: translateX(-50%);
         width: 60px;
         height: 60px;
-        background: linear-gradient(135deg, #6bffb2 0%, #5ac7ee 100%);
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+
         color: white;
         font-size: 32px;
         border: none;

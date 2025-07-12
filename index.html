@@ -17,13 +17,38 @@
 </head>
 
 <body>
+    <!-- formspree -->
+    <button id="contactBtn">📩</button>
+
+    <div id="formOverlay" class="hidden">
+        <div class="form-popup">
+            <button id="closeBtn" class="close-btn">×</button>
+            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="email-form">
+                <h2>Liên hệ với tôi</h2>
+
+                <label for="email">Email của bạn</label>
+                <input type="email" name="email" id="email" required placeholder="you@example.com" />
+
+                <label for="message">Tin nhắn</label>
+                <textarea name="message" id="message" required placeholder="Nhập nội dung..."></textarea>
+
+                <button type="submit">Gửi</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- game -->
+    <a href="game.html" id="game">🎮</a>
     <!-- test 10/7 -->
     <a href="https://www.facebook.com/nguyenhuuanhnopro" target="_blank">
-        <img src="img/cho-removebg-preview.png" alt="Ảnh góc trái" class="top-left-image">
+        <img src="img/download.png" alt="Ảnh góc trái" class="top-left-image">
     </a>
     <a href="https://www.instagram.com/nguyenhuuanhnopro/" target="_blank">
-        <img src="img/meo.png" alt="Ảnh góc trái" class="top-right-image">
+        <img src="img/download1.png" alt="Ảnh góc phải" class="top-right-image">
     </a>
+
+    <!-- <a href="https://www.facebook.com/nguyenhuuanhnopro" class="top-left-image">🫀</a> -->
     <!-- Nút mở hộp quà -->
     <div class="button-row">
         <button id="gift-toggle">🎁</button>
@@ -48,6 +73,7 @@
 
     <!-- test 10/7 -->
     <a href="traitim.html" id="center-link">🫀</a>
+
     <!-- test 7/7 -->
     <div class="video-container">
         <video autoplay muted loop id="bg-video">

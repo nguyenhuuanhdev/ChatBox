@@ -745,3 +745,23 @@ receiveGift.onclick = () => {
         <img src="${randomImg}" alt="Ảnh món quà" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
     `;
 };
+
+
+//formspree 
+
+const contactBtn = document.getElementById("contactBtn");
+const formOverlay = document.getElementById("formOverlay");
+const closeBtn = document.getElementById("closeBtn");
+
+contactBtn.onclick = () => {
+    formOverlay.classList.remove("hidden");
+};
+
+closeBtn.onclick = () => {
+    formOverlay.classList.add("hidden");
+};
+
+
+
+
+

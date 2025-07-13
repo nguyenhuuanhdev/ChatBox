@@ -1147,7 +1147,7 @@ body.show-chatbot .chatbot-popup {
 }
 
 
-/* @media (max-width: 768px) {
+@media (max-width: 768px) {
     .video-container {
         width: 300px;
         height: auto;
@@ -1168,40 +1168,7 @@ body.show-chatbot .chatbot-popup {
 
     .gif-overlay {
         width: 80px;
-        /* Nếu có overlay ảnh gif chèn lên video 
-    }
-} */
-@media (max-width: 768px) {
-    .video-container {
-        width: 90%;
-        /* thay vì cố định 300px, giúp co giãn trên mọi loại iPhone */
-        max-width: 340px;
-        /* hạn chế rộng quá trên iPhone Pro Max */
-        padding: 16px;
-        position: fixed;
-        top: 40%;
-        /* đẩy lên so với top: 50% */
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: black;
-        border-radius: 20px;
-        z-index: 10;
-        /* nên để dương, tránh bị ẩn dưới nền */
-    }
 
-    #bg-video {
-        width: 100%;
-        height: auto;
-        border-radius: 12px;
-    }
-
-    .gif-overlay {
-        width: 80px;
-        position: absolute;
-        top: 10px;
-        /* ví dụ */
-        right: 10px;
-        /* Đặt thêm nếu muốn overlay động vật nhảy múa chẳng hạn */
     }
 }
 

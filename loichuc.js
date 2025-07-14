@@ -111,7 +111,9 @@ const images = [
     "img/108.png",
     "img/109.png",
     "img/110.png",
-    "img/111.png"
+    "img/111.png",
+    "img/112.png",
+    "img/113.png"
 
 
 

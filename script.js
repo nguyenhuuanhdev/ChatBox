@@ -433,10 +433,12 @@ toggleBtn.addEventListener('click', () => {
 
 
 
+let currentIcon = '💗';
+
 function createHeart() {
     const heart = document.createElement('div');
     heart.classList.add('heart');
-    heart.innerText = '💗';
+    heart.innerText = currentIcon;
     heart.style.left = Math.random() * 100 + 'vw';
     heart.style.animationDuration = (2 + Math.random() * 3) + 's';
     document.body.appendChild(heart);
@@ -463,21 +465,33 @@ function startHeartRainSequence() {
         intervalId = setInterval(createHeart, delay);
     }
 
-    // Apply timeline
     speedTimeline.forEach(step => {
         setTimeout(() => {
             setRainDelay(step.delay);
         }, step.time);
     });
 
-    // Start with fastest
     setRainDelay(speedTimeline[0].delay);
 }
 
-// Gọi hàm này khi bạn muốn bắt đầu mưa
-startHeartRainSequence();
-// Bạn có thể chỉnh nhanh hơn/slower
+// Hàm kiểm tra thời gian để đổi icon
+function updateIconByTime() {
+    const hour = new Date().getHours();
+    if (hour >= 22 || hour < 5) {
+        currentIcon = '😴';
+    } else {
+        currentIcon = '💗';
+    }
+}
 
+// Kiểm tra mỗi phút
+setInterval(updateIconByTime, 60 * 1000);
+
+// Gọi ngay khi load
+updateIconByTime();
+
+// Bắt đầu mưa
+startHeartRainSequence();
 
 
 

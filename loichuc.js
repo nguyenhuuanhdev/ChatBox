@@ -179,6 +179,9 @@ const images = [
     "img/176.jpg",
     "img/177.jpg",
     "img/178.jpg",
+    "img/179.png",
+    "img/180.png",
+    "img/181.png"
 
 
 
@@ -1124,7 +1127,9 @@ const messages = [
     "997. 🌼 Sau bữa trưa, cậu nhớ duỗi lưng, thả lỏng vai nhé!",
     "998. 🍚 Ăn ngon, để chiều nay cậu cười rạng rỡ hơn!",
     "999. 🍵 Bữa ăn không chỉ giúp no bụng, mà còn giúp ấm lòng!",
-    "1000. 🥗 Chúc cậu luôn có những bữa trưa ngon và nhiều niềm vui!"
+    "1000. 🥗 Chúc cậu luôn có những bữa trưa ngon và nhiều niềm vui!",
+    "9999. 🫀 Anh nho em"
+
 
 
 ];

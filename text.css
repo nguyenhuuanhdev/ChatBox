@@ -1159,6 +1159,7 @@ body.show-chatbot .chatbot-popup {
         /* background-color: black; */
         border-radius: 20px;
         z-index: -1;
+        border-bottom: 5px;
     }
 
     #bg-video {

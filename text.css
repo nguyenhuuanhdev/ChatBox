@@ -1148,6 +1148,8 @@ body.show-chatbot .chatbot-popup {
 
 
 @media (max-width: 768px) {
+
+    /* test nhiều video 18/7 */
     .video-container {
         width: 300px;
         height: auto;
@@ -1159,7 +1161,7 @@ body.show-chatbot .chatbot-popup {
         /* background-color: black; */
         border-radius: 20px;
         z-index: -1;
-        border-bottom: 5px;
+
     }
 
     #bg-video {

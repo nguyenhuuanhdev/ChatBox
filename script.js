@@ -542,6 +542,3 @@ closeBtn.onclick = () => {
 };
 
 
-
-
-

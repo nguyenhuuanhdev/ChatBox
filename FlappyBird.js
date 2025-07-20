@@ -340,3 +340,58 @@ function gameLoop() {
 
 // Initialize game
 document.getElementById('bestScore').textContent = bestScore;
+
+
+//âm thanh game
+// Khởi tạo đối tượng âm thanh
+const flapSound = new Audio('img/click.mp3');
+const dieSound = new Audio('img/die.mp3');
+
+// Phát âm khi click/tap hoặc bấm Space
+function playFlap() {
+    flapSound.currentTime = 0;
+    flapSound.play();
+}
+
+// Thay đổi trong event listeners
+document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+        e.preventDefault();
+        if (gameState === 'playing') {
+            bird.velocity = bird.jumpPower;
+            createParticles(bird.x, bird.y);
+            playFlap();
+        }
+    }
+});
+
+canvas.addEventListener('click', () => {
+    if (gameState === 'playing') {
+        bird.velocity = bird.jumpPower;
+        createParticles(bird.x, bird.y);
+        playFlap();
+    }
+});
+
+// Phát âm game over
+function gameOver() {
+    if (gameState === 'gameOver') return;
+    gameState = 'gameOver';
+    dieSound.play();
+
+    document.getElementById('finalScore').textContent = score;
+    document.getElementById('finalBestScore').textContent = bestScore;
+    document.getElementById('gameOver').style.display = 'block';
+
+    // Hiệu ứng particle như trước
+    for (let i = 0; i < 15; i++) {
+        particles.push({
+            x: bird.x + Math.random() * 40 - 20,
+            y: bird.y + Math.random() * 40 - 20,
+            vx: Math.random() * 8 - 4,
+            vy: Math.random() * 8 - 4,
+            life: 60,
+            color: `hsl(${Math.random() * 360}, 100%, 50%)`
+        });
+    }
+}

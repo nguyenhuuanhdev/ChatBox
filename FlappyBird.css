@@ -16,6 +16,26 @@
      overflow: hidden;
  }
 
+ /* test nen */
+ .background-image {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-image: url('img/nen1.png');
+     /* <-- đổi đường dẫn nếu cần */
+     background-size: cover;
+     background-position: center;
+     filter: brightness(0.9) blur(2px);
+     /* Làm mờ và tối nhẹ */
+     z-index: 0;
+     opacity: 10;
+     /* Mờ nhẹ */
+ }
+
+ /* test nen */
+
  .game-container {
      position: relative;
      width: 400px;

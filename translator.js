@@ -405,6 +405,8 @@ window.onload = function () {
 };
 
 
+
+
 function speakText(type) {
     const text = (type === 'input')
         ? document.getElementById("inputText").value.trim()
@@ -424,4 +426,5 @@ function speakText(type) {
 
 const audio = new Audio(`https://api.streamelements.com/kappa/v2/speech?voice=Brian&text=${encodeURIComponent(text)}`);
 audio.play();
+
 

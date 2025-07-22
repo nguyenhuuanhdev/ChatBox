@@ -433,7 +433,7 @@ toggleBtn.addEventListener('click', () => {
 
 
 
-let currentIcon = '💗';
+let currentIcon = '🥷';
 
 function createHeart() {
     const heart = document.createElement('div');
@@ -480,7 +480,7 @@ function updateIconByTime() {
     if (hour >= 22 || hour < 5) {
         currentIcon = '💤';
     } else {
-        currentIcon = '💞';
+        currentIcon = '🥷';
     }
 }
 

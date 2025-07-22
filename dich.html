@@ -35,8 +35,18 @@
                 </select>
             </div>
             <textarea id="inputText" placeholder="Enter text here..." onkeyup="handleKeyUp(event)"></textarea>
-            <button id="translateBtn" onclick="translateText()"> Translate</button>
+            <div class="audio-controls">
+                <button class="audio-btn" onclick="speakText('input')" title="Listen to input text">🔊 Listen</button>
+            </div>
+            <button id="translateBtn" onclick="translateText()">🌈 Translate</button>
             <div id="output" class="outputBox">Your translation will appear here...</div>
+            <div id="pronunciation" class="pronunciationBox" style="display: none;">
+                <strong>🗣️ Pronunciation:</strong> <span id="pronunciationText"></span>
+            </div>
+            <div class="audio-controls" id="outputAudioControls" style="display: none;">
+                <button class="audio-btn" onclick="speakText('output')" title="Listen to translation">🔊 Listen
+                    Translation</button>
+            </div>
         </div>
     </div>
 

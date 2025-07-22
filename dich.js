@@ -95,12 +95,155 @@ const translations = {
     }
 };
 
-function swapLanguages() {
-    const fromLang = document.getElementById('fromLang');
-    const toLang = document.getElementById('toLang');
-    const temp = fromLang.value;
-    fromLang.value = toLang.value;
-    toLang.value = temp;
+// Pronunciation dictionary for common words
+const pronunciations = {
+    'en': {
+        'hello': '/həˈloʊ/',
+        'hi': '/haɪ/',
+        'goodbye': '/ɡʊdˈbaɪ/',
+        'thank you': '/θæŋk juː/',
+        'thanks': '/θæŋks/',
+        'yes': '/jɛs/',
+        'no': '/noʊ/',
+        'please': '/pliːz/',
+        'sorry': '/ˈsɔːri/',
+        'excuse me': '/ɪkˈskjuːz miː/',
+        'how are you': '/haʊ ɑːr juː/',
+        'i love you': '/aɪ lʌv juː/',
+        'good morning': '/ɡʊd ˈmɔːrnɪŋ/',
+        'good night': '/ɡʊd naɪt/',
+        'water': '/ˈwɔːtər/',
+        'food': '/fuːd/',
+        'house': '/haʊs/',
+        'cat': '/kæt/',
+        'dog': '/dɔːɡ/',
+        'beautiful': '/ˈbjuːtɪfəl/',
+        'good': '/ɡʊd/',
+        'bad': '/bæd/',
+        'big': '/bɪɡ/',
+        'small': '/smɔːl/'
+    },
+    'vi': {
+        'xin chào': '[sin chaːo]',
+        'chào': '[chaːo]',
+        'tạm biệt': '[tam biət]',
+        'cảm ơn': '[kaːm ən]',
+        'có': '[koː]',
+        'không': '[kʰoŋm]',
+        'xin hãy': '[sin haːj]',
+        'xin lỗi': '[sin loːj]',
+        'bạn có khỏe không': '[baːn koː kʰweː kʰoŋm]',
+        'anh yêu em': '[aɲ jeːu ɛm]',
+        'chào buổi sáng': '[chaːo buəj saːŋ]',
+        'chúc ngủ ngon': '[cuk ŋuː ŋɔn]',
+        'nước': '[nɯək]',
+        'thức ăn': '[tʰɯk aːn]',
+        'nhà': '[ɲaː]',
+        'mèo': '[mɛːo]',
+        'chó': '[coː]',
+        'đẹp': '[ɗɛp]',
+        'tốt': '[toːt]',
+        'xấu': '[saːu]',
+        'lớn': '[ləːn]',
+        'nhỏ': '[ɲoː]'
+    },
+    'ko': {
+        '안녕하세요': '[annyeonghaseyo]',
+        '안녕': '[annyeong]',
+        '안녕히 가세요': '[annyeonghi gaseyo]',
+        '감사합니다': '[gamsahamnida]',
+        '네': '[ne]',
+        '아니요': '[aniyo]',
+        '부탁합니다': '[butakamnida]',
+        '죄송합니다': '[joesonghamnida]',
+        '어떻게 지내세요': '[eotteoke jinaese yo]',
+        '사랑해요': '[saranghaeyo]',
+        '좋은 아침': '[joeun achim]',
+        '잘 자요': '[jal jayo]'
+    },
+    'ja': {
+        'こんにちは': '[konnichiwa]',
+        'やあ': '[yaa]',
+        'さようなら': '[sayounara]',
+        'ありがとうございます': '[arigatou gozaimasu]',
+        'はい': '[hai]',
+        'いいえ': '[iie]',
+        'お願いします': '[onegai shimasu]',
+        'すみません': '[sumimasen]',
+        '元気ですか': '[genki desu ka]',
+        '愛してる': '[aishiteru]',
+        'おはようございます': '[ohayou gozaimasu]',
+        'おやすみなさい': '[oyasumi nasai]'
+    }
+};
+
+function speakText(type) {
+    if (!('speechSynthesis' in window)) {
+        alert('🔊 Speech synthesis not supported in your browser');
+        return;
+    }
+
+    let text = '';
+    let lang = '';
+
+    if (type === 'input') {
+        text = document.getElementById('inputText').value.trim();
+        lang = document.getElementById('fromLang').value;
+    } else if (type === 'output') {
+        const outputElement = document.getElementById('output');
+        // Extract just the translated text, removing HTML tags and labels
+        text = outputElement.textContent.replace(/^.*Translation:\s*/, '').replace(/^[^"]*"([^"]*)".*$/, '$1').trim();
+        lang = document.getElementById('toLang').value;
+    }
+
+    if (!text) {
+        alert('⚠️ No text to speak');
+        return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    // Map language codes to speech synthesis language codes
+    const langMap = {
+        'en': 'en-US',
+        'vi': 'vi-VN',
+        'ko': 'ko-KR',
+        'ja': 'ja-JP',
+        'zh': 'zh-CN',
+        'fr': 'fr-FR',
+        'de': 'de-DE',
+        'es': 'es-ES'
+    };
+
+    utterance.lang = langMap[lang] || 'en-US';
+    utterance.rate = 0.8;
+    utterance.pitch = 1;
+    utterance.volume = 0.8;
+
+    // Stop any currently speaking text
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+}
+
+function getPronunciation(text, lang) {
+    const dict = pronunciations[lang];
+    if (!dict) return null;
+
+    const lowerText = text.toLowerCase().trim();
+    return dict[lowerText] || null;
+}
+
+function showPronunciation(text, lang) {
+    const pronunciation = getPronunciation(text, lang);
+    const pronElement = document.getElementById('pronunciation');
+    const pronText = document.getElementById('pronunciationText');
+
+    if (pronunciation) {
+        pronText.textContent = pronunciation;
+        pronElement.style.display = 'block';
+    } else {
+        pronElement.style.display = 'none';
+    }
 }
 
 function handleKeyUp(event) {
@@ -109,22 +252,36 @@ function handleKeyUp(event) {
     }
 }
 
+function swapLanguages() {
+    const fromLang = document.getElementById('fromLang');
+    const toLang = document.getElementById('toLang');
+    const temp = fromLang.value;
+    fromLang.value = toLang.value;
+    toLang.value = temp;
+}
+
 async function translateText() {
     const text = document.getElementById("inputText").value.trim();
     const from = document.getElementById("fromLang").value;
     const to = document.getElementById("toLang").value;
     const output = document.getElementById("output");
     const btn = document.getElementById("translateBtn");
+    const outputAudioControls = document.getElementById("outputAudioControls");
+    const pronElement = document.getElementById('pronunciation');
 
     if (!text) {
         output.textContent = "⚠️ Please enter some text to translate.";
         output.className = "outputBox error";
+        outputAudioControls.style.display = "none";
+        pronElement.style.display = "none";
         return;
     }
 
     if (from === to) {
         output.textContent = "⚠️ Please select different source and target languages.";
         output.className = "outputBox error";
+        outputAudioControls.style.display = "none";
+        pronElement.style.display = "none";
         return;
     }
 
@@ -132,6 +289,8 @@ async function translateText() {
     btn.innerHTML = "⏳ Translating...";
     output.textContent = "✨ Translating your text...";
     output.className = "outputBox loading";
+    outputAudioControls.style.display = "none";
+    pronElement.style.display = "none";
 
     try {
         // Try multiple translation APIs
@@ -145,17 +304,25 @@ async function translateText() {
         if (translated) {
             output.innerHTML = `🎯 <strong>Translation:</strong><br><br>"${translated}"`;
             output.className = "outputBox success";
+            outputAudioControls.style.display = "block";
+
+            // Show pronunciation if available
+            showPronunciation(translated, to);
         } else {
             output.innerHTML = `🔍 <strong>Translation not available</strong><br><br>Try using simple words like:<br>"hello", "thank you", "water"`;
             output.className = "outputBox error";
+            outputAudioControls.style.display = "none";
+            pronElement.style.display = "none";
         }
     } catch (error) {
         console.error("Translation error:", error);
         output.innerHTML = `❌ <strong>Oops! Something went wrong</strong><br><br>Please try again or use simpler text`;
         output.className = "outputBox error";
+        outputAudioControls.style.display = "none";
+        pronElement.style.display = "none";
     } finally {
         btn.disabled = false;
-        btn.innerHTML = "Translate";
+        btn.innerHTML = "🌈 Translate";
     }
 }
 

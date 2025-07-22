@@ -403,3 +403,25 @@ window.onload = function () {
         translateText();
     }, 1500);
 };
+
+
+function speakText(type) {
+    const text = (type === 'input')
+        ? document.getElementById("inputText").value.trim()
+        : document.getElementById("output").textContent.trim();
+
+    if (!text) return;
+
+    const url = `https://api.streamelements.com/kappa/v2/speech?voice=Brian&text=${encodeURIComponent(text)}`;
+    const audio = new Audio(url);
+    audio.play().catch(error => {
+        alert("🔇 Không thể phát âm thanh trên trình duyệt này.");
+        console.error(error);
+    });
+}
+
+
+
+const audio = new Audio(`https://api.streamelements.com/kappa/v2/speech?voice=Brian&text=${encodeURIComponent(text)}`);
+audio.play();
+

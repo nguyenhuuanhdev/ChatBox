@@ -118,17 +118,20 @@ async function translateText() {
 
     if (!text) {
         output.textContent = "⚠️ Please enter some text to translate.";
+        output.className = "outputBox error";
         return;
     }
 
     if (from === to) {
         output.textContent = "⚠️ Please select different source and target languages.";
+        output.className = "outputBox error";
         return;
     }
 
     btn.disabled = true;
     btn.innerHTML = "⏳ Translating...";
-    output.textContent = "⏳ Translating...";
+    output.textContent = "✨ Translating your text...";
+    output.className = "outputBox loading";
 
     try {
         // Try multiple translation APIs
@@ -140,16 +143,19 @@ async function translateText() {
         }
 
         if (translated) {
-            output.innerHTML = `<strong>Translation:</strong><br>${translated}`;
+            output.innerHTML = `🎯 <strong>Translation:</strong><br><br>"${translated}"`;
+            output.className = "outputBox success";
         } else {
-            output.innerHTML = `<strong>⚠️ Translation not available</strong><br>Try using a different API or check your internet connection.<br><br><em>Suggestion: Try simple words like "hello", "thank you", etc.</em>`;
+            output.innerHTML = `🔍 <strong>Translation not available</strong><br><br>Try using simple words like:<br>"hello", "thank you", "water"`;
+            output.className = "outputBox error";
         }
     } catch (error) {
         console.error("Translation error:", error);
-        output.innerHTML = `<strong>❌ Translation failed</strong><br>Error: ${error.message}<br><br><em>Suggestion: Try simpler text or check your connection.</em>`;
+        output.innerHTML = `❌ <strong>Oops! Something went wrong</strong><br><br>Please try again or use simpler text`;
+        output.className = "outputBox error";
     } finally {
         btn.disabled = false;
-        btn.innerHTML = " Translate";
+        btn.innerHTML = "Translate";
     }
 }
 
@@ -223,7 +229,10 @@ function translateWithDictionary(text, from, to) {
 // Auto-translate on page load with sample text
 window.onload = function () {
     document.getElementById("inputText").value = "Hello, how are you?";
+    const output = document.getElementById("output");
+    output.innerHTML = "🌟 Welcome! Enter text above and click translate";
+    output.className = "outputBox";
     setTimeout(() => {
         translateText();
-    }, 1000);
+    }, 1500);
 };

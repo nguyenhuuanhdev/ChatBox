@@ -478,9 +478,9 @@ function startHeartRainSequence() {
 function updateIconByTime() {
     const hour = new Date().getHours();
     if (hour >= 22 || hour < 5) {
-        currentIcon = '💤';
+        currentIcon = '😪';
     } else {
-        currentIcon = '🥷';
+        currentIcon = '😳';
     }
 }
 

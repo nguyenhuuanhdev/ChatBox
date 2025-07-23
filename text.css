@@ -111,6 +111,54 @@ body {
     padding: 0;
 }
 
+/* tran bo nho */
+.bonho {
+    position: fixed;
+    bottom: 630px;
+    /* display: flex;
+    justify-content: space-between; */
+    /* left: 32%; */
+    right: 35px;
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6bffb2 0%, #5ac7ee 100%);
+    color: white;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 1000;
+    animation: pulse-glow 1.8s infinite ease-in-out;
+}
+
+/* cờ caro */
+.caro {
+    position: fixed;
+    bottom: 630px;
+    /* display: flex;
+    justify-content: space-between; */
+    /* left: 32%; */
+    right: 120px;
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6bffb2 0%, #5ac7ee 100%);
+    color: white;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 1000;
+    animation: pulse-glow 1.8s infinite ease-in-out;
+}
+
 /* chụp quà ảnh */
 .image_anh {
     position: fixed;
@@ -1174,6 +1222,58 @@ body.show-chatbot .chatbot-popup {
 
 
 @media (max-width: 768px) {
+    .bonho {
+        position: fixed;
+        bottom: 252px;
+        /* left: calc(50% - 30px);  nếu về 3 mục*/
+        /* /* 30px là nửa width  */
+        /* transform: none; */
+        /* left: 80pt; */
+        right: 20px;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #6bffb2 0%, #5ac7ee 100%);
+        color: white;
+        font-size: 32px;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 15px rgba(0, 174, 255, 0.6);
+        cursor: pointer;
+        z-index: 1;
+        transition: all 0.3s ease;
+        animation: pulse-glow-strong 1.6s infinite ease-in-out;
+    }
+
+    .caro {
+        position: fixed;
+        bottom: 252px;
+        /* left: calc(50% - 30px);  nếu về 3 mục*/
+        /* /* 30px là nửa width  */
+        /* transform: none; */
+        /* left: 80pt; */
+        right: 30%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #6bffb2 0%, #5ac7ee 100%);
+        color: white;
+        font-size: 32px;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 15px rgba(0, 174, 255, 0.6);
+        cursor: pointer;
+        z-index: 1;
+        transition: all 0.3s ease;
+        animation: pulse-glow-strong 1.6s infinite ease-in-out;
+    }
+
     .image_anh {
         position: fixed;
         bottom: 252px;

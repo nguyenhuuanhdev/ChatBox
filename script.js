@@ -478,7 +478,7 @@ function startHeartRainSequence() {
 function updateIconByTime() {
     const hour = new Date().getHours();
     if (hour >= 24 || hour < 5) {
-        currentIcon = 'hẹ hẹ hẹ';
+        currentIcon = '🥺';
     } else {
         currentIcon = 'An nhong ha xê dô';
     }

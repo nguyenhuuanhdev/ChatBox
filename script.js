@@ -480,7 +480,7 @@ function updateIconByTime() {
     if (hour >= 24 || hour < 5) {
         currentIcon = '🥺';
     } else {
-        currentIcon = 'An nhong ha xê dô';
+        currentIcon = '🥷';
     }
 }
 

@@ -477,10 +477,10 @@ function startHeartRainSequence() {
 // Hàm kiểm tra thời gian để đổi icon
 function updateIconByTime() {
     const hour = new Date().getHours();
-    if (hour >= 24 || hour < 5) {
-        currentIcon = '🥺';
+    if (hour >= 23 || hour < 7) {
+        currentIcon = '👣';
     } else {
-        currentIcon = '🥷';
+        currentIcon = '👣';
     }
 }
 

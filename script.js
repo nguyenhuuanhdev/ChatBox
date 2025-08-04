@@ -480,7 +480,7 @@ function updateIconByTime() {
     if (hour >= 23 || hour < 7) {
         currentIcon = '👣';
     } else {
-        currentIcon = '👣';
+        currentIcon = '🤒';
     }
 }
 

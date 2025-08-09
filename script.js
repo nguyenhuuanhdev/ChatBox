@@ -405,23 +405,43 @@ function stopResize() {
 // test 8/7
 
 
-const music = document.getElementById('bg-music');
-const toggleBtn = document.getElementById('music-toggle');
+// const music = document.getElementById('bg-music');
+// const toggleBtn = document.getElementById('music-toggle');
 
+// let isPlaying = false;
+
+// toggleBtn.addEventListener('click', () => {
+//     if (isPlaying) {
+//         music.pause();
+//         toggleBtn.innerText = "🔊";
+//     } else {
+//         music.play();
+//         toggleBtn.innerText = "🔇";
+//     }
+//     isPlaying = !isPlaying;
+// });
+
+const music = document.getElementById('bg-music');
+const icon = document.getElementById('music-icon');
 let isPlaying = false;
 
-toggleBtn.addEventListener('click', () => {
-    if (isPlaying) {
-        music.pause();
-        toggleBtn.innerText = "🔊";
-    } else {
+document.getElementById('music-toggle').addEventListener('click', () => {
+    if (!isPlaying) {
+        music.currentTime = 0;
         music.play();
-        toggleBtn.innerText = "🔇";
+        icon.src = "img/tatloa.png";
+        isPlaying = true;
+    } else {
+        music.pause();
+        icon.src = "img/moloa2.png";
+        isPlaying = false;
     }
-    isPlaying = !isPlaying;
 });
 
-
+music.addEventListener('ended', () => {
+    icon.src = "img/moloa2.png";
+    isPlaying = false;
+});
 
 // test 10/7
 

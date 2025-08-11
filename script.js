@@ -458,26 +458,85 @@ function stopResize() {
 //     isPlaying = !isPlaying;
 // });
 
-const music = document.getElementById('bg-music');
 const icon = document.getElementById('music-icon');
+let currentMusic = null;
 let isPlaying = false;
+let currentIndex = 0; // Chỉ số file hiện tại
+
+// Danh sách các file âm thanh
+const musicFiles = [
+    "img/amthanh0.mp3",
+    "img/amthanh1.mp4",
+    "img/amthanh4.mp3",
+    "img/amthanh3.mp3",
+    "img/amthanh5.mp3",
+    "img/amthanh6.mp3",
+    "img/amthanh7.mp3",
+    "video/video2.mp3",
+    "video/video3.mp3",
+    "video/video4.mp3",
+    "video/video5.mp3",
+    "video/video6.mp3",
+    "video/video7.mp3",
+    "video/video8.mp3",
+    "video/video9.mp3",
+    "video/video10.mp3",
+    "video/video11.mp3",
+    "video/video12.mp3",
+    "video/video13.mp3",
+    "video/video14.mp3",
+    "video/video15.mp3",
+    "video/video16.mp3",
+    "video/video17.mp3",
+    "video/video18.mp3",
+    "video/video19.mp3",
+    "video/video20.mp3",
+    "video/video21.mp3",
+    "video/video22.mp3",
+    "video/video23.mp3",
+    "video/video24.mp3",
+    "video/video25.mp3",
+    "video/video26.mp3",
+    "video/video27.mp3",
+    "video/video28.mp3",
+    "video/video29.mp3"
+];
+
+function getNextMusic() {
+    const music = musicFiles[currentIndex];
+    currentIndex = (currentIndex + 1) % musicFiles.length; // Quay về đầu khi hết danh sách
+    return music;
+}
 
 document.getElementById('music-toggle').addEventListener('click', () => {
     if (!isPlaying) {
-        music.currentTime = 0;
-        music.play();
+        // Dừng nhạc cũ nếu có
+        if (currentMusic) {
+            currentMusic.pause();
+            currentMusic.currentTime = 0;
+        }
+
+        // Tạo audio mới với file tiếp theo
+        currentMusic = new Audio(getNextMusic());
+        currentMusic.currentTime = 0;
+        currentMusic.play();
+
         icon.src = "img/tatloa.png";
         isPlaying = true;
+
+        // Tự động chuyển icon khi nhạc kết thúc
+        currentMusic.addEventListener('ended', () => {
+            icon.src = "img/moloa2.png";
+            isPlaying = false;
+        });
+
     } else {
-        music.pause();
+        if (currentMusic) {
+            currentMusic.pause();
+        }
         icon.src = "img/moloa2.png";
         isPlaying = false;
     }
-});
-
-music.addEventListener('ended', () => {
-    icon.src = "img/moloa2.png";
-    isPlaying = false;
 });
 
 // test 10/7

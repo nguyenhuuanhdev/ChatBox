@@ -23,24 +23,43 @@ const userData = {
 // test 8/7
 const video = document.getElementById('bg-video');
 
-video.addEventListener('click', function () {
+// Kiểm tra thông tin video khi load xong
+video.addEventListener('loadedmetadata', function () {
+    console.log('Video loaded:');
+    console.log('- Có âm thanh:', video.mozHasAudio || Boolean(video.webkitAudioDecodedByteCount) || Boolean(video.audioTracks && video.audioTracks.length));
+    console.log('- Volume:', video.volume);
+    console.log('- Muted:', video.muted);
+});
+
+function toggleSound() {
     if (video.muted) {
         // Bật âm thanh
         video.muted = false;
-        console.log('Đã bật âm thanh');
+        video.volume = 1; // Đảm bảo volume = 100%
+        console.log('✅ Đã bật âm thanh - Volume:', video.volume, 'Muted:', video.muted);
+
+        // Thử phát lại video để kích hoạt âm thanh
+        video.play().catch(e => console.log('Play error:', e));
     } else {
         // Tắt âm thanh  
         video.muted = true;
-        console.log('Đã tắt âm thanh');
+        console.log('🔇 Đã tắt âm thanh - Muted:', video.muted);
     }
+}
+
+// Xử lý click cho desktop
+video.addEventListener('click', toggleSound);
+
+// Xử lý touch cho mobile
+video.addEventListener('touchend', function (e) {
+    e.preventDefault(); // Ngăn double-tap zoom
+    toggleSound();
 });
 
 // Xử lý lỗi nếu video không tải được
 video.addEventListener('error', function () {
-    console.error('Không thể tải video');
+    console.error('❌ Không thể tải video');
 });
-
-
 // const chatHistory = [];
 const chatHistory = [
     {

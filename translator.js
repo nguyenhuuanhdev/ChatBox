@@ -395,7 +395,7 @@ function translateWithDictionary(text, from, to) {
 
 // Auto-translate on page load with sample text
 window.onload = function () {
-    document.getElementById("inputText").value = "Hello, how are you?";
+    document.getElementById("inputText").value = "Hello";
     const output = document.getElementById("output");
     output.innerHTML = "🌟 Welcome! Enter text above and click translate";
     output.className = "outputBox";

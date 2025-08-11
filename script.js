@@ -21,6 +21,24 @@ const userData = {
 };
 
 // test 8/7
+const video = document.getElementById('bg-video');
+
+video.addEventListener('click', function () {
+    if (video.muted) {
+        // Bật âm thanh
+        video.muted = false;
+        console.log('Đã bật âm thanh');
+    } else {
+        // Tắt âm thanh  
+        video.muted = true;
+        console.log('Đã tắt âm thanh');
+    }
+});
+
+// Xử lý lỗi nếu video không tải được
+video.addEventListener('error', function () {
+    console.error('Không thể tải video');
+});
 
 
 // const chatHistory = [];

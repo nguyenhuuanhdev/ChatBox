@@ -508,6 +508,114 @@ function getNextMusic() {
     return music;
 }
 
+//test 
+
+
+
+
+
+// Danh sách các video - bạn có thể thêm video khác vào đây
+const videoList = [
+    "img/emdethuong.mp4",
+    "img/mgr1.mp4",
+    "img/mgr2.mp4",
+    "img/mgr3.mp4",
+    "img/mgr4.mp4",
+    "img/mgr5.mp4",
+
+
+
+    // Thêm các video khác vào đây
+];
+
+let currentVideoIndex = 0;
+
+// Hàm lấy video ngẫu nhiên (không trùng với video hiện tại)
+function getRandomVideo() {
+    if (videoList.length <= 1) {
+        return videoList[0];
+    }
+
+    let randomIndex;
+    do {
+        randomIndex = Math.floor(Math.random() * videoList.length);
+    } while (randomIndex === currentVideoIndex); // Đảm bảo không trùng video hiện tại
+
+    currentVideoIndex = randomIndex;
+    console.log('Video random được chọn:', videoList[randomIndex]);
+    return videoList[randomIndex];
+}
+
+// Khởi tạo video player
+function initVideoPlayer() {
+    const videoElement = document.getElementById('bg-video');
+
+    // Bỏ thuộc tính loop để video có thể kết thúc
+    videoElement.removeAttribute('loop');
+
+    console.log('Video player đã khởi tạo, danh sách video:', videoList);
+
+    // Xử lý sự kiện khi video kết thúc
+    videoElement.addEventListener('ended', () => {
+        console.log('Video đã kết thúc, chuyển sang video tiếp theo...');
+
+        // Kiểm tra nếu chỉ có 1 video thì không cần chuyển
+        if (videoList.length <= 1) {
+            console.log('Chỉ có 1 video, phát lại từ đầu');
+            videoElement.currentTime = 0;
+            videoElement.play();
+            return;
+        }
+
+        // Chuyển sang video ngẫu nhiên
+        const nextVideoSrc = getRandomVideo();
+        console.log('Video tiếp theo:', nextVideoSrc);
+
+        // Tìm source element hoặc tạo mới
+        let sourceElement = videoElement.querySelector('source');
+        if (!sourceElement) {
+            sourceElement = document.createElement('source');
+            sourceElement.type = "video/mp4";
+            videoElement.appendChild(sourceElement);
+        }
+
+        // Cập nhật source và tải video mới
+        sourceElement.src = nextVideoSrc;
+        videoElement.load(); // Tải video mới
+
+        // Phát video mới sau khi đã tải xong
+        videoElement.addEventListener('loadeddata', function playNewVideo() {
+            console.log('Video mới đã tải xong, bắt đầu phát');
+            videoElement.play().catch(e => console.log('Lỗi phát video:', e));
+            // Xóa event listener này để tránh lặp lại
+            videoElement.removeEventListener('loadeddata', playNewVideo);
+        });
+    });
+
+    // Xử lý lỗi loading video
+    videoElement.addEventListener('error', (e) => {
+        console.log('Lỗi tải video:', e);
+        // Thử video tiếp theo nếu video hiện tại lỗi
+        setTimeout(() => {
+            if (videoList.length > 1) {
+                const nextVideoSrc = getNextVideo();
+                console.log('Thử video tiếp theo do lỗi:', nextVideoSrc);
+                let sourceElement = videoElement.querySelector('source');
+                if (sourceElement) {
+                    sourceElement.src = nextVideoSrc;
+                    videoElement.load();
+                }
+            }
+        }, 1000);
+    });
+}
+
+// Khởi tạo khi DOM đã load
+document.addEventListener('DOMContentLoaded', () => {
+    initVideoPlayer();
+});
+
+// Cập nhật code nhạc với tính năng tương tự (nếu cần)
 document.getElementById('music-toggle').addEventListener('click', () => {
     if (!isPlaying) {
         // Dừng nhạc cũ nếu có
@@ -528,6 +636,11 @@ document.getElementById('music-toggle').addEventListener('click', () => {
         currentMusic.addEventListener('ended', () => {
             icon.src = "img/moloa2.png";
             isPlaying = false;
+
+            // Tự động phát nhạc tiếp theo (tùy chọn)
+            // setTimeout(() => {
+            //     document.getElementById('music-toggle').click();
+            // }, 500);
         });
 
     } else {

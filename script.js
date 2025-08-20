@@ -465,6 +465,7 @@ let currentIndex = 0; // Chỉ số file hiện tại
 
 // Danh sách các file âm thanh
 const musicFiles = [
+    "video/video13.mp3",
     "img/amthanh0.mp3",
     "img/amthanh1.mp4",
     "img/amthanh4.mp3",
@@ -483,7 +484,7 @@ const musicFiles = [
     "video/video10.mp3",
     "video/video11.mp3",
     "video/video12.mp3",
-    "video/video13.mp3",
+
     "video/video14.mp3",
     "video/video15.mp3",
     "video/video16.mp3",
@@ -516,12 +517,12 @@ function getNextMusic() {
 
 // Danh sách các video - bạn có thể thêm video khác vào đây
 const videoList = [
-    "img/emdethuong.mp4",
-    "img/mgr1.mp4",
-    "img/mgr2.mp4",
-    "img/mgr3.mp4",
-    "img/mgr4.mp4",
-    "img/mgr5.mp4",
+    // "img/emdethuong.mp4",
+    // "img/mgr1.mp4",
+    // "img/mgr2.mp4",
+    // "img/mgr3.mp4",
+    // "img/mgr4.mp4",
+    // "img/mgr5.mp4",
 
 
 
@@ -681,6 +682,8 @@ function startHeartRainSequence() {
     const speedTimeline = [
         { time: 0, delay: 1 },
         { time: 5000, delay: 100 },
+        { time: 5000, delay: 100 },
+        { time: 5000, delay: 100 },
         { time: 10000, delay: 200 },
         { time: 12000, delay: 300 },
         { time: 13000, delay: 500 },
@@ -706,10 +709,10 @@ function startHeartRainSequence() {
 // Hàm kiểm tra thời gian để đổi icon
 function updateIconByTime() {
     const hour = new Date().getHours();
-    if (hour >= 23 || hour < 7) {
-        currentIcon = '🥺';
+    if (hour >= 24 || hour < 7) {
+        currentIcon = '🥳';
     } else {
-        currentIcon = '❤️';
+        currentIcon = '🥳';
     }
 }
 

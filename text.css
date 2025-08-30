@@ -113,6 +113,62 @@ body {
     padding: 0;
 }
 
+/* github */
+.github {
+    position: fixed;
+    bottom: 30px;
+    /* cách mép dưới 30px */
+    left: 55%;
+    /* canh giữa theo chiều ngang */
+    transform: translateX(-50%);
+    /* dịch sang trái 1/2 để đúng giữa */
+    max-width: 80px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+    z-index: 1000;
+    /* animation: pulse-glow 1.8s infinite ease-in-out; */
+}
+
+/* zalo */
+.zalo {
+    position: fixed;
+    bottom: 30px;
+    /* cách mép dưới 30px */
+    left: 45%;
+    /* canh giữa theo chiều ngang */
+    transform: translateX(-50%);
+    /* dịch sang trái 1/2 để đúng giữa */
+    max-width: 80px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+    z-index: 1000;
+    /* animation: pulse-glow 1.8s infinite ease-in-out; */
+}
+
+/* andanh tik tok */
+.tiktok {
+    position: fixed;
+    bottom: 30px;
+    /* cách mép dưới 30px */
+    left: 50%;
+    /* canh giữa theo chiều ngang */
+    transform: translateX(-50%);
+    /* dịch sang trái 1/2 để đúng giữa */
+    max-width: 80px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+    z-index: 1000;
+    /* animation: pulse-glow 1.8s infinite ease-in-out; */
+}
+
+
+
 /* tran bo nho */
 .bonho {
     position: fixed;
@@ -1573,6 +1629,57 @@ body.show-chatbot .chatbot-popup {
 
 
 @media (max-width: 768px) {
+
+    /* test github */
+    .github {
+        position: fixed;
+        top: 10%;
+        /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
+        left: 70%;
+        /* canh giữa ngang */
+        transform: translateX(-50%);
+        width: 60px;
+        /* kích thước icon */
+        height: auto;
+        cursor: pointer;
+        z-index: 2;
+        /* cao hơn video */
+
+    }
+
+    /* test zalo */
+    .zalo {
+        position: fixed;
+        top: 11%;
+        /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
+        left: 30%;
+        /* canh giữa ngang */
+        transform: translateX(-50%);
+        width: 60px;
+        /* kích thước icon */
+        height: auto;
+        cursor: pointer;
+        z-index: 2;
+        /* cao hơn video */
+
+    }
+
+    /* test tik tok */
+    .tiktok {
+        position: fixed;
+        top: 10%;
+        /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
+        left: 50%;
+        /* canh giữa ngang */
+        transform: translateX(-50%);
+        width: 60px;
+        /* kích thước icon */
+        height: auto;
+        cursor: pointer;
+        z-index: 2;
+        /* cao hơn video */
+
+    }
 
     /* test nhiều video 18/7 */
     .video-container {

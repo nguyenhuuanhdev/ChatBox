@@ -715,7 +715,7 @@ function updateIconByTime() {
     if (hour >= 24 || hour < 7) {
         currentIcon = '❤️';
     } else {
-        currentIcon = '🌸';
+        currentIcon = '😤';
     }
 }
 

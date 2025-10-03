@@ -713,10 +713,10 @@ function startHeartRainSequence() {
 // Hàm kiểm tra thời gian để đổi icon
 function updateIconByTime() {
     const hour = new Date().getHours();
-    if (hour >= 24 || hour < 7) {
+    if (hour >= 23 || hour < 6) {
         currentIcon = '❤️';
     } else {
-        currentIcon = '🙁';
+        currentIcon = '🦝';
     }
 }
 

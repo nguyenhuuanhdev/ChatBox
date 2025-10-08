@@ -1633,7 +1633,7 @@ body.show-chatbot .chatbot-popup {
     /* test github */
     .github {
         position: fixed;
-        top: 10%;
+        top: 8%;
         /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
         left: 70%;
         /* canh giữa ngang */
@@ -1650,7 +1650,7 @@ body.show-chatbot .chatbot-popup {
     /* test zalo */
     .zalo {
         position: fixed;
-        top: 11%;
+        top: 9%;
         /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
         left: 30%;
         /* canh giữa ngang */
@@ -1667,7 +1667,7 @@ body.show-chatbot .chatbot-popup {
     /* test tik tok */
     .tiktok {
         position: fixed;
-        top: 10%;
+        top: 8%;
         /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
         left: 50%;
         /* canh giữa ngang */

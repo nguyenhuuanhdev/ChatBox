@@ -517,11 +517,12 @@ function getNextMusic() {
 
 // Danh sách các video - bạn có thể thêm video khác vào đây
 const videoList = [
-    "img/test1.mp4",
-    "img/test2.mp4",
-    "img/test3.mp4",
-    "img/test4.mp4",
-    "img/bien.mp4",
+    // "img/test1.mp4",
+    // "img/test2.mp4",
+    // "img/test3.mp4",
+    // "img/test4.mp4",
+    // "img/bien.mp4",
+
 
 
 

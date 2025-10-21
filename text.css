@@ -761,6 +761,7 @@ a {
 /* test 8/7 */
 .video-container {
     position: fixed;
+
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -776,7 +777,7 @@ a {
 
 #bg-video {
     width: 100%;
-    max-width: 600px;
+    max-width: 450px;
     /* Giới hạn chiều rộng trên mobile */
     height: auto;
     object-fit: contain;
@@ -1683,11 +1684,11 @@ body.show-chatbot .chatbot-popup {
 
     /* test nhiều video 18/7 */
     .video-container {
-        width: 300px;
+        width: 260px;
         height: auto;
         padding: 20px;
         position: fixed;
-        top: 30%;
+        top: 35%;
         left: 50%;
         transform: translate(-50%, -50%);
         /* background-color: black; */

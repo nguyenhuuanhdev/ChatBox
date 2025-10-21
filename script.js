@@ -517,11 +517,8 @@ function getNextMusic() {
 
 // Danh sách các video - bạn có thể thêm video khác vào đây
 const videoList = [
-    "img/test1.mp4",
-    "img/test2.mp4",
-    "img/test3.mp4",
-    "img/test4.mp4",
-    "img/bien.mp4",
+    "img/10knam.mp4",
+
 
 
 
@@ -715,10 +712,10 @@ function startHeartRainSequence() {
 // Hàm kiểm tra thời gian để đổi icon
 function updateIconByTime() {
     const hour = new Date().getHours();
-    if (hour >= 23 || hour < 6) {
+    if (hour >= 22 || hour < 8) {
         currentIcon = '🧣';
     } else {
-        currentIcon = '😜';
+        currentIcon = '🥺';
     }
 }
 

@@ -465,7 +465,7 @@ let currentIndex = 0; // Chỉ số file hiện tại
 
 // Danh sách các file âm thanh
 const musicFiles = [
-    "video/video13.mp3",
+    // "video/video13.mp3",
     "img/amthanh0.mp3",
     "img/amthanh1.mp4",
     "img/amthanh4.mp3",
@@ -713,9 +713,9 @@ function startHeartRainSequence() {
 function updateIconByTime() {
     const hour = new Date().getHours();
     if (hour >= 22 || hour < 8) {
-        currentIcon = '🧣';
+        currentIcon = '🦉';
     } else {
-        currentIcon = '🥺';
+        currentIcon = '🐷';
     }
 }
 

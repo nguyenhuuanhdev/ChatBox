@@ -518,9 +518,9 @@ function getNextMusic() {
 // Danh sách các video - bạn có thể thêm video khác vào đây
 const videoList = [
     // "img/10knam.mp4",
-    "img/tiktok1.mp4",
+    "img/tiktok2.mp4",
     // "img/meme2.mp4",
-    "img/tiktok1.mp4",
+    
 
 
 

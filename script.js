@@ -519,6 +519,9 @@ function getNextMusic() {
 const videoList = [
     // "img/10knam.mp4",
     "img/tiktok1.mp4",
+    // "img/meme2.mp4",
+    "img/tiktok1.mp4",
+
 
 
 
@@ -714,9 +717,9 @@ function startHeartRainSequence() {
 function updateIconByTime() {
     const hour = new Date().getHours();
     if (hour >= 22 || hour < 8) {
-        currentIcon = '🦉';
+        currentIcon = '😴';
     } else {
-        currentIcon = '🐷';
+        currentIcon = '💕';
     }
 }
 

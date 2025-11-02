@@ -520,7 +520,7 @@ const videoList = [
     // "img/10knam.mp4",
     "img/tiktok2.mp4",
     // "img/meme2.mp4",
-    
+
 
 
 
@@ -688,15 +688,15 @@ let intervalId = null;
 function startHeartRainSequence() {
     const speedTimeline = [
         { time: 0, delay: 1 },
-        { time: 5000, delay: 100 },
-        { time: 5000, delay: 100 },
-        { time: 5000, delay: 100 },
-        { time: 10000, delay: 200 },
-        { time: 12000, delay: 300 },
-        { time: 13000, delay: 500 },
-        { time: 14000, delay: 600 },
-        { time: 15000, delay: 700 },
-        { time: 16000, delay: 900 },
+        // { time: 5000, delay: 100 },
+        // { time: 5000, delay: 100 },
+        // { time: 5000, delay: 100 },
+        // { time: 10000, delay: 200 },
+        // { time: 12000, delay: 300 },
+        // { time: 13000, delay: 500 },
+        // { time: 14000, delay: 600 },
+        // { time: 15000, delay: 700 },
+        // { time: 16000, delay: 900 },
     ];
 
     function setRainDelay(delay) {
@@ -719,7 +719,7 @@ function updateIconByTime() {
     if (hour >= 22 || hour < 8) {
         currentIcon = '😴';
     } else {
-        currentIcon = '💕';
+        currentIcon = '🌹';
     }
 }
 

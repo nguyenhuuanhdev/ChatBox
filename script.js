@@ -719,7 +719,7 @@ function updateIconByTime() {
     if (hour >= 22 || hour < 8) {
         currentIcon = '😴';
     } else {
-        currentIcon = '🌷';
+        currentIcon = '🥹';
     }
 }
 

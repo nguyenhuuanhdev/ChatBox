@@ -9,9 +9,15 @@ const closeChatbot = document.querySelector("#close-chatbot");
 
 
 // Api setup
-const API_KEY = "AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA"; // LINK LẤY API KEY: https://aistudio.google.com/apikey
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+//const API_KEY = "AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA"; // LINK LẤY API KEY: https://aistudio.google.com/apikey
+//const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+// api gemini 2.5
+const API_KEY = "AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA"; // Khóa API của bạn
+const NEW_MODEL_NAME = "gemini-2.5-flash"; // Thay đổi tên mô hình
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${NEW_MODEL_NAME}:generateContent?key=${API_KEY}`;
 
+// API_URL mới sẽ là: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA
+//api gemini 2.5
 const userData = {
     message: null,
     file: {

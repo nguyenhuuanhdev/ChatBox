@@ -1877,7 +1877,7 @@ body.show-chatbot .chatbot-popup {
         padding: 20px;
         position: fixed;
         /* chỉnh điểm nằm cao thấp của video trên điện thoại */
-        top: 28%;
+        top: 25%;
         left: 50%;
         transform: translate(-50%, -50%);
         /* background-color: black; */

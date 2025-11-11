@@ -1399,9 +1399,75 @@ body.show-chatbot .chatbot-popup {
 
 
 @media (max-width: 768px) {
+    .test4 {
+        position: fixed;
+        bottom: 328px;
+        left: 20px;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #6bffb2 0%, #5ac7ee 100%);
+        color: white;
+        font-size: 32px;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 15px rgba(0, 174, 255, 0.6);
+        cursor: pointer;
+        z-index: 1;
+        transition: all 0.3s ease;
+        animation: pulse-glow-strong 1.6s infinite ease-in-out;
+    }
+
+    .test3 {
+        position: fixed;
+        bottom: 328px;
+        left: 30%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #6bffb2 0%, #5ac7ee 100%);
+        color: white;
+        font-size: 32px;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 15px rgba(0, 174, 255, 0.6);
+        cursor: pointer;
+        z-index: 1;
+        transition: all 0.3s ease;
+        animation: pulse-glow-strong 1.6s infinite ease-in-out;
+    }
+
+    .test2 {
+        position: fixed;
+        bottom: 328px;
+        right: 30%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #6bffb2 0%, #5ac7ee 100%);
+        color: white;
+        font-size: 32px;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 15px rgba(0, 174, 255, 0.6);
+        cursor: pointer;
+        z-index: 1;
+        transition: all 0.3s ease;
+        animation: pulse-glow-strong 1.6s infinite ease-in-out;
+    }
+
     .test1 {
         position: fixed;
-        bottom: 252px;
+        bottom: 328px;
         /* left: calc(50% - 30px);  nếu về 3 mục*/
         /* /* 30px là nửa width  */
         /* transform: none; */
@@ -1810,7 +1876,8 @@ body.show-chatbot .chatbot-popup {
         height: auto;
         padding: 20px;
         position: fixed;
-        top: 35%;
+        /* chỉnh điểm nằm cao thấp của video trên điện thoại */
+        top: 28%;
         left: 50%;
         transform: translate(-50%, -50%);
         /* background-color: black; */

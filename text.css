@@ -184,7 +184,7 @@ body {
     animation: pulse-glow 1.8s infinite ease-in-out;
 }
 
-.test4 {
+.cmd {
     position: fixed;
     bottom: 800px;
     /* display: flex;
@@ -205,6 +205,42 @@ body {
     cursor: pointer;
     z-index: 1000;
     animation: pulse-glow 1.8s infinite ease-in-out;
+}
+
+/* ig 1 */
+.instagram1 {
+    position: fixed;
+    bottom: 30px;
+    /* cách mép dưới 30px */
+    left: 30%;
+    /* canh giữa theo chiều ngang */
+    transform: translateX(-50%);
+    /* dịch sang trái 1/2 để đúng giữa */
+    max-width: 80px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+    z-index: 1000;
+    /* animation: pulse-glow 1.8s infinite ease-in-out; */
+}
+
+/* facebook1 */
+.facebook1 {
+    position: fixed;
+    bottom: 30px;
+    /* cách mép dưới 30px */
+    left: 70%;
+    /* canh giữa theo chiều ngang */
+    transform: translateX(-50%);
+    /* dịch sang trái 1/2 để đúng giữa */
+    max-width: 80px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+    z-index: 1000;
+    /* animation: pulse-glow 1.8s infinite ease-in-out; */
 }
 
 /* github */
@@ -1399,7 +1435,7 @@ body.show-chatbot .chatbot-popup {
 
 
 @media (max-width: 768px) {
-    .test4 {
+    .cmd {
         position: fixed;
         bottom: 328px;
         left: 20px;
@@ -1819,10 +1855,44 @@ body.show-chatbot .chatbot-popup {
 
 @media (max-width: 768px) {
 
+    /* ig1 */
+    .instagram1 {
+        position: fixed;
+        top: 4%;
+        /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
+        left: 10%;
+        /* canh giữa ngang */
+        transform: translateX(-50%);
+        width: 60px;
+        /* kích thước icon */
+        height: auto;
+        cursor: pointer;
+        z-index: 2;
+        /* cao hơn video */
+
+    }
+
+    /* fb 1 */
+    .facebook1 {
+        position: fixed;
+        top: 4%;
+        /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
+        left: 85%;
+        /* canh giữa ngang */
+        transform: translateX(-50%);
+        width: 60px;
+        /* kích thước icon */
+        height: auto;
+        cursor: pointer;
+        z-index: 2;
+        /* cao hơn video */
+
+    }
+
     /* test github */
     .github {
         position: fixed;
-        top: 5%;
+        top: 4%;
         /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
         left: 70%;
         /* canh giữa ngang */
@@ -1839,7 +1909,7 @@ body.show-chatbot .chatbot-popup {
     /* test zalo */
     .zalo {
         position: fixed;
-        top: 6%;
+        top: 5%;
         /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
         left: 30%;
         /* canh giữa ngang */
@@ -1856,7 +1926,7 @@ body.show-chatbot .chatbot-popup {
     /* test tik tok */
     .tiktok {
         position: fixed;
-        top: 5%;
+        top: 4%;
         /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
         left: 50%;
         /* canh giữa ngang */
@@ -1872,7 +1942,7 @@ body.show-chatbot .chatbot-popup {
 
     /* test nhiều video 18/7 */
     .video-container {
-        width: 260px;
+        width: 240px;
         height: auto;
         padding: 20px;
         position: fixed;

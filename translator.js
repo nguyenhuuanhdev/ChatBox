@@ -394,6 +394,8 @@ function translateWithDictionary(text, from, to) {
 }
 
 // Auto-translate on page load with sample text
+
+
 window.onload = function () {
     document.getElementById("inputText").value = "Hello";
     const output = document.getElementById("output");
@@ -422,6 +424,59 @@ function speakText(type) {
     });
 }
 
+function speakText(type) {
+    if (!('speechSynthesis' in window)) {
+        alert('🔊 Trình duyệt của bạn không hỗ trợ phát giọng nói.');
+        return;
+    }
+
+    // Lấy nội dung cần đọc
+    let text = '';
+    let lang = '';
+    if (type === 'input') {
+        text = document.getElementById('inputText').value.trim();
+        lang = document.getElementById('fromLang').value;
+    } else if (type === 'output') {
+        const output = document.getElementById('output');
+        text = output.textContent.replace(/^.*Translation:\s*/, '').trim();
+        lang = document.getElementById('toLang').value;
+    }
+
+    if (!text) {
+        alert('⚠️ Không có nội dung để đọc.');
+        return;
+    }
+
+    // Ánh xạ mã ngôn ngữ sang giọng trình duyệt
+    const langMap = {
+        'en': 'en-US',
+        'vi': 'vi-VN',
+        'ko': 'ko-KR',
+        'ja': 'ja-JP',
+        'zh': 'zh-CN',
+        'fr': 'fr-FR',
+        'de': 'de-DE',
+        'es': 'es-ES'
+    };
+
+    // Hủy phát cũ nếu đang nói
+    window.speechSynthesis.cancel();
+
+    // Tạo giọng đọc
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = langMap[lang] || 'en-US';
+    utter.rate = 1.0;   // tốc độ đọc
+    utter.pitch = 1.0;  // cao độ
+    utter.volume = 1.0; // âm lượng
+
+    // Chọn giọng nếu có
+    const voices = window.speechSynthesis.getVoices();
+    const matchedVoice = voices.find(v => v.lang === utter.lang);
+    if (matchedVoice) utter.voice = matchedVoice;
+
+    // Phát giọng nói
+    window.speechSynthesis.speak(utter);
+}
 
 
 const audio = new Audio(`https://api.streamelements.com/kappa/v2/speech?voice=Brian&text=${encodeURIComponent(text)}`);

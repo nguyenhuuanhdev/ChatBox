@@ -115,7 +115,7 @@ body {
 
 /* 11/11 hang5 */
 /* tran bo nho */
-.test1 {
+.word {
     position: fixed;
     bottom: 715px;
     /* display: flex;
@@ -138,7 +138,7 @@ body {
     animation: pulse-glow 1.8s infinite ease-in-out;
 }
 
-.test2 {
+.music {
     position: fixed;
     bottom: 715px;
     /* display: flex;
@@ -161,7 +161,7 @@ body {
     animation: pulse-glow 1.8s infinite ease-in-out;
 }
 
-.test3 {
+.portfolio {
     position: fixed;
     bottom: 800px;
     /* display: flex;
@@ -212,7 +212,7 @@ body {
     position: fixed;
     bottom: 30px;
     /* cách mép dưới 30px */
-    left: 55%;
+    left: 60%;
     /* canh giữa theo chiều ngang */
     transform: translateX(-50%);
     /* dịch sang trái 1/2 để đúng giữa */
@@ -230,7 +230,7 @@ body {
     position: fixed;
     bottom: 30px;
     /* cách mép dưới 30px */
-    left: 45%;
+    left: 40%;
     /* canh giữa theo chiều ngang */
     transform: translateX(-50%);
     /* dịch sang trái 1/2 để đúng giữa */
@@ -1421,7 +1421,7 @@ body.show-chatbot .chatbot-popup {
         animation: pulse-glow-strong 1.6s infinite ease-in-out;
     }
 
-    .test3 {
+    .portfolio {
         position: fixed;
         bottom: 328px;
         left: 30%;
@@ -1443,7 +1443,7 @@ body.show-chatbot .chatbot-popup {
         animation: pulse-glow-strong 1.6s infinite ease-in-out;
     }
 
-    .test2 {
+    .music {
         position: fixed;
         bottom: 328px;
         right: 30%;
@@ -1465,7 +1465,7 @@ body.show-chatbot .chatbot-popup {
         animation: pulse-glow-strong 1.6s infinite ease-in-out;
     }
 
-    .test1 {
+    .word {
         position: fixed;
         bottom: 328px;
         /* left: calc(50% - 30px);  nếu về 3 mục*/
@@ -1822,7 +1822,7 @@ body.show-chatbot .chatbot-popup {
     /* test github */
     .github {
         position: fixed;
-        top: 8%;
+        top: 5%;
         /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
         left: 70%;
         /* canh giữa ngang */
@@ -1839,7 +1839,7 @@ body.show-chatbot .chatbot-popup {
     /* test zalo */
     .zalo {
         position: fixed;
-        top: 9%;
+        top: 6%;
         /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
         left: 30%;
         /* canh giữa ngang */
@@ -1856,7 +1856,7 @@ body.show-chatbot .chatbot-popup {
     /* test tik tok */
     .tiktok {
         position: fixed;
-        top: 8%;
+        top: 5%;
         /* 30% là đầu video, trừ thêm chiều cao icon (60px) để nó đứng trên */
         left: 50%;
         /* canh giữa ngang */

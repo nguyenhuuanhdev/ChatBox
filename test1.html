@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Music Player</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background: #000;
+            color: #0f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0, 255, 0, 0.03) 0px,
+                    rgba(0, 255, 0, 0.03) 1px,
+                    transparent 1px,
+                    transparent 2px);
+            pointer-events: none;
+            animation: scanline 8s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        .terminal {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(0, 0, 0, 0.95);
+            border: 3px solid #0f0;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5),
+                inset 0 0 100px rgba(0, 255, 0, 0.05);
+            padding: 20px;
+            position: relative;
+            animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.98;
+            }
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #0f0;
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-button {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border: 1px solid #0f0;
+        }
+
+        .terminal-button.red {
+            background: #ff0000;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        .terminal-button.yellow {
+            background: #ffff00;
+            box-shadow: 0 0 10px #ffff00;
+        }
+
+        .terminal-button.green {
+            background: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .terminal-title {
+            font-size: 1.5em;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+        }
+
+        .output-line {
+            margin: 8px 0;
+            font-size: 1.3em;
+            letter-spacing: 1px;
+        }
+
+        .prompt {
+            color: #0ff;
+            text-shadow: 0 0 5px #0ff;
+        }
+
+        .ascii-art {
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+            margin: 15px 0;
+            font-size: 0.9em;
+            line-height: 1.2;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .progress-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #0f0;
+            background: rgba(0, 255, 0, 0.05);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 20px;
+            border: 1px solid #0f0;
+            margin: 10px 0;
+            position: relative;
+            background: #000;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: #0f0;
+            box-shadow: 0 0 10px #0f0;
+            transition: width 0.1s linear;
+        }
+
+        .lyrics-display {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #0f0;
+            background: rgba(0, 255, 0, 0.02);
+            min-height: 150px;
+        }
+
+        .current-lyric {
+            font-size: 1.5em;
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff;
+            margin-bottom: 20px;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .next-lyric {
+            font-size: 1.2em;
+            color: #0f0;
+            opacity: 0.6;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .cmd-button {
+            background: #000;
+            color: #0f0;
+            border: 2px solid #0f0;
+            padding: 12px 30px;
+            font-family: 'VT323', monospace;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-shadow: 0 0 5px #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .cmd-button:hover {
+            background: #0f0;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+            text-shadow: none;
+        }
+
+        .cmd-button:active {
+            transform: scale(0.98);
+        }
+
+        .cmd-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: #0f0;
+            animation: cursor-blink 1s step-end infinite;
+            margin-left: 5px;
+        }
+
+        @keyframes cursor-blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .time-info {
+            color: #ff0;
+            text-shadow: 0 0 5px #ff0;
+        }
+
+        @media (max-width: 768px) {
+            .terminal {
+                padding: 15px;
+            }
+
+            .output-line {
+                font-size: 1.1em;
+            }
+
+            .current-lyric {
+                font-size: 1.2em;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .cmd-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="terminal-button red"></div>
+                <div class="terminal-button yellow"></div>
+                <div class="terminal-button green"></div>
+            </div>
+            <div class="terminal-title">MUSIC PLAYER v1.0</div>
+        </div>
+        <!-- 
+        <div class="output-line">
+            <span class="prompt">root@music:~$</span> ./play_song.sh
+        </div> -->
+
+
+        <div class="output-line">
+            <span class="prompt">[INFO]</span> Bài hát: <span style="color: #ff0;">Ngôi Nhà Hạnh Phúc</span>
+        </div>
+
+        <div class="progress-section">
+            <div class="output-line">
+                <span class="time-info">Thời gian: <span id="current-time">00:00</span> / <span
+                        id="total-time">00:00</span></span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progress"></div>
+            </div>
+            <div class="output-line">
+                <span class="prompt">[PROGRESS]</span> <span id="percent">0</span>% hoàn thành
+            </div>
+        </div>
+
+        <div class="lyrics-display">
+            <div class="output-line">
+                <span class="prompt">♪ ĐANG HÁT:</span>
+            </div>
+            <div class="current-lyric" id="current-lyric">
+                Nhấn [PLAY] để bắt đầu<span class="cursor"></span>
+            </div>
+
+            <div class="output-line">
+                <span class="prompt">♫ TIẾP THEO:</span>
+            </div>
+            <div class="next-lyric" id="next-lyric">
+                Dù ngày mai ra sao thì vẫn chỉ yêu người thôi…
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="cmd-button" id="play-btn">
+                ▶ [PLAY]
+            </button>
+            <button class="cmd-button" id="pause-btn" style="display: none;">
+                ⏸ [PAUSE]
+            </button>
+            <button class="cmd-button" id="reset-btn">
+                ↻ [RESET]
+            </button>
+        </div>
+
+        <div class="output-line" style="margin-top: 20px;">
+            <span class="prompt">root@music:~$</span><span class="cursor"></span>
+        </div>
+    </div>
+
+    <audio id="background-music" loop>
+        <source src="img/ngoinhahanhphuc.mp4" type="audio/mp4" />
+    </audio>
+
+    <script>
+        const lyrics = [
+            "Dù ngày mai ra sao thì vẫn chỉ yêu người thôi…",
+            "Dẫu chỉ là giấc mơ anh xin mơ hoài",
+            "Cuối con đường nắng lên chờ em đến",
+            "Đến khi nào trên thế gian mặt trời ngừng sáng lối em đi về",
+            "Ánh mắt này, đôi tay này mãi thuộc về nhau",
+            "Dẫu chỉ là giấc mơ anh xin mơ hoài",
+            "Cuối con đường nắng lên chờ em đến",
+            "Đến khi nào trên thế gian mặt trời ngừng sáng lối em đi về",
+            "Ánh mắt này, đôi tay này mãi thuộc về nhau"
+        ];
+
+        let currentIndex = 0;
+        let isPlaying = false;
+        let progress = 0;
+        let intervalId = null;
+        const lineDuration = 5500;
+        const updateInterval = 50;
+        const audio = document.getElementById('background-music');
+
+        const currentLyric = document.getElementById('current-lyric');
+        const nextLyric = document.getElementById('next-lyric');
+        const progressBar = document.getElementById('progress');
+        const playBtn = document.getElementById('play-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const currentTime = document.getElementById('current-time');
+        const totalTime = document.getElementById('total-time');
+        const percentDisplay = document.getElementById('percent');
+
+        function updateDisplay() {
+            currentLyric.innerHTML = lyrics[currentIndex] + '<span class="cursor"></span>';
+            nextLyric.textContent = currentIndex + 1 < lyrics.length ? lyrics[currentIndex + 1] : "[END OF FILE]";
+
+            const totalSeconds = Math.floor((lyrics.length * lineDuration) / 1000);
+            const currentSeconds = Math.floor((currentIndex * lineDuration + (progress * lineDuration / 100)) / 1000);
+
+            currentTime.textContent = formatTime(currentSeconds);
+            totalTime.textContent = formatTime(totalSeconds);
+
+            const totalProgress = ((currentIndex + progress / 100) / lyrics.length * 100).toFixed(1);
+            percentDisplay.textContent = totalProgress;
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateProgress() {
+            if (!isPlaying) return;
+
+            progress += (updateInterval / lineDuration) * 100;
+
+            if (progress >= 100) {
+                progress = 0;
+                currentIndex++;
+
+                if (currentIndex >= lyrics.length) {
+                    stop();
+                    currentIndex = lyrics.length - 1;
+                    return;
+                }
+            }
+
+            progressBar.style.width = progress + '%';
+            updateDisplay();
+        }
+
+        function play() {
+            if (currentIndex >= lyrics.length) {
+                reset();
+            }
+            isPlaying = true;
+            playBtn.style.display = 'none';
+            pauseBtn.style.display = 'inline-block';
+
+            audio.play().catch(err => {
+                console.log('Không thể phát nhạc:', err);
+            });
+
+            intervalId = setInterval(updateProgress, updateInterval);
+        }
+
+        function pause() {
+            isPlaying = false;
+            playBtn.style.display = 'inline-block';
+            pauseBtn.style.display = 'none';
+
+            audio.pause();
+
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+        }
+
+        function stop() {
+            pause();
+            currentLyric.innerHTML = "[PLAYBACK COMPLETED] ✓<span class=\"cursor\"></span>";
+            nextLyric.textContent = "Nhấn [RESET] để phát lại";
+        }
+
+        function reset() {
+            pause();
+            currentIndex = 0;
+            progress = 0;
+            progressBar.style.width = '0%';
+            audio.currentTime = 0;
+            updateDisplay();
+        }
+
+        playBtn.addEventListener('click', play);
+        pauseBtn.addEventListener('click', pause);
+        resetBtn.addEventListener('click', reset);
+
+        updateDisplay();
+    </script>
+</body>
+
+</html>

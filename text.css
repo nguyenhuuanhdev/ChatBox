@@ -115,7 +115,7 @@ body {
 
 /* 11/11 hang5 */
 /* tran bo nho */
-.word {
+.ubuntu {
     position: fixed;
     bottom: 715px;
     /* display: flex;
@@ -1465,7 +1465,7 @@ body.show-chatbot .chatbot-popup {
         animation: pulse-glow-strong 1.6s infinite ease-in-out;
     }
 
-    .word {
+    .ubuntu {
         position: fixed;
         bottom: 328px;
         /* left: calc(50% - 30px);  nếu về 3 mục*/

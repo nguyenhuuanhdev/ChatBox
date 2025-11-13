@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo Pro</title>
+    <style>
+        :root {
+            --bg-light: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --bg-dark: linear-gradient(135deg, #1e1e2f 0%, #2d1b3d 100%);
+            --card-light: rgba(255, 255, 255, 0.95);
+            --card-dark: rgba(42, 42, 61, 0.95);
+            --text-light: #1e1e2f;
+            --text-dark: #f4f4f8;
+            --accent: #38bdf8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --purple: #a855f7;
+            --completed: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+            transition: background 0.5s ease;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        body.dark {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        .wrap {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            /* background: rgba(255, 255, 255, 0.1); */
+            padding: 12px 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        body.dark header h1 {
+            background: linear-gradient(135deg, #38bdf8 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark .icon-btn {
+            background: rgba(56, 189, 248, 0.2);
+        }
+
+        .icon-btn:active {
+            transform: scale(0.95);
+        }
+
+        .card {
+            background: var(--card-light);
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        body.dark .card {
+            background: var(--card-dark);
+        }
+
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        input[type=text] {
+            flex: 1;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            outline: none;
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        body.dark input[type=text] {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dark);
+        }
+
+        input[type=text]:focus {
+            border-color: var(--accent);
+        }
+
+        .priority-select {
+            padding: 12px 10px;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+            min-width: 100px;
+        }
+
+        body.dark .priority-select {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dark);
+        }
+
+        .add-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 100%);
+            color: #fff;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 15px;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .add-btn:active {
+            transform: scale(0.97);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .filter-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* ===============================
+   Base filter-tab
+=============================== */
+        .filter-tab {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        /* ===============================
+   Dark mode
+=============================== */
+        body.dark .filter-tab {
+            background-color: rgba(255, 255, 255, 0.1);
+            /* background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background-blend-mode: overlay;
+            border-radius: 12px;
+            padding: 12px 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+        }
+
+        /* ===============================
+   Active state (light + dark)
+=============================== */
+        .filter-tab.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Dark mode + active (ưu tiên) */
+        body.dark .filter-tab.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4);
+        }
+
+        /* ===============================
+   Hover effect
+=============================== */
+        .filter-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark .filter-tab:hover {
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.1);
+        }
+
+
+        .search-box {
+            margin-bottom: 12px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        body.dark .search-box input {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dark);
+        }
+
+        ul.todo-list {
+            list-style: none;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        ul.todo-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ul.todo-list::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+
+        ul.todo-list::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        ul.todo-list li {
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            background: rgba(0, 0, 0, 0.02);
+            border-left: 3px solid transparent;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        body.dark ul.todo-list li {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        li.completed {
+            opacity: 0.6;
+        }
+
+        li.completed .todo-text {
+            text-decoration: line-through;
+            color: var(--completed);
+        }
+
+        li.priority-high {
+            border-left-color: var(--danger);
+        }
+
+        li.priority-medium {
+            border-left-color: var(--warning);
+        }
+
+        li.priority-low {
+            border-left-color: var(--success);
+        }
+
+        .todo-content {
+            flex: 1;
+            margin-right: 8px;
+        }
+
+        .todo-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .todo-text {
+            flex: 1;
+            font-size: 15px;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        .priority-badge {
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .priority-badge.high {
+            background: var(--danger);
+            color: white;
+        }
+
+        .priority-badge.medium {
+            background: var(--warning);
+            color: white;
+        }
+
+        .priority-badge.low {
+            background: var(--success);
+            color: white;
+        }
+
+        .todo-date {
+            font-size: 11px;
+            color: var(--completed);
+        }
+
+        .todo-actions {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .todo-btn {
+            width: 32px;
+            height: 32px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .todo-btn:active {
+            transform: scale(1.2);
+        }
+
+        .bubble {
+            position: fixed;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 100%);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-weight: 700;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+            animation: bubble 2.5s ease-out forwards;
+            z-index: 10000;
+            pointer-events: none;
+            font-size: 14px;
+        }
+
+        .bubble.hazz {
+            background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+        }
+
+        .bubble.success {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+        }
+
+        @keyframes bubble {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0.5);
+            }
+
+            20% {
+                opacity: 1;
+                transform: translateY(-30px) scale(1.1);
+            }
+
+            80% {
+                opacity: 1;
+                transform: translateY(-60px) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.8);
+            }
+        }
+
+        .stats-panel {
+            display: none;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        body.dark .stats-panel {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .stats-panel.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--completed);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--completed);
+        }
+
+        .empty-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-light);
+            padding: 20px;
+            border-radius: 18px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        body.dark .modal-content {
+            background: var(--card-dark);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .modal-header h2 {
+            font-size: 18px;
+            color: var(--accent);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--completed);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        body.dark .modal-body input {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dark);
+        }
+
+        .modal-body .priority-select {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-cancel {
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-light);
+        }
+
+        body.dark .btn-cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dark);
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 100%);
+            color: white;
+        }
+
+        .btn-cancel:active,
+        .btn-save:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <h1>ToDoApp</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="statsBtn" title="Thống kê">&#128202;</button>
+                <button class="icon-btn" id="modeToggle" title="Chế độ">&#127769;</button>
+            </div>
+        </header>
+
+        <div class="card">
+            <div class="stats-panel" id="statsPanel">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalTasks">0</div>
+                        <div class="stat-label">Tổng</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="completedTasks">0</div>
+                        <div class="stat-label">Hoàn thành</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="pendingTasks">0</div>
+                        <div class="stat-label">Đang làm</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="completionRate">0%</div>
+                        <div class="stat-label">Tỉ lệ</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-section">
+                <input type="text" id="todoInput" placeholder="Thêm công việc mới..." />
+                <div class="input-row">
+                    <select class="priority-select" id="prioritySelect">
+                        <option value="low">&#128994; Thấp</option>
+                        <option value="medium">&#128993; Trung bình</option>
+                        <option value="high">&#128308; Cao</option>
+                    </select>
+                    <button class="add-btn" id="addBtn">Thêm</button>
+                </div>
+            </div>
+
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">Tất cả</button>
+                <button class="filter-tab" data-filter="active">Đang làm</button>
+                <button class="filter-tab" data-filter="completed">Hoàn thành</button>
+                <button class="filter-tab" data-filter="high">Ưu tiên</button>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="&#128269; Tìm kiếm..." />
+            </div>
+
+            <ul class="todo-list" id="todoList"></ul>
+
+            <div class="empty-state" id="emptyState" style="display:none;">
+                <div class="empty-icon">&#128221;</div>
+                <h3>Chưa có công việc</h3>
+                <p>Thêm công việc đầu tiên nào!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Chỉnh sửa</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="editInput" placeholder="Nội dung..." />
+                <select class="priority-select" id="editPrioritySelect">
+                    <option value="low">&#128994; Thấp</option>
+                    <option value="medium">&#128993; Trung bình</option>
+                    <option value="high">&#128308; Cao</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" id="cancelEdit">Hủy</button>
+                <button class="btn-save" id="saveEdit">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const todoInput = document.getElementById('todoInput');
+        const addBtn = document.getElementById('addBtn');
+        const todoList = document.getElementById('todoList');
+        const modeToggle = document.getElementById('modeToggle');
+        const statsBtn = document.getElementById('statsBtn');
+        const statsPanel = document.getElementById('statsPanel');
+        const searchInput = document.getElementById('searchInput');
+        const prioritySelect = document.getElementById('prioritySelect');
+        const emptyState = document.getElementById('emptyState');
+        const editModal = document.getElementById('editModal');
+        const editInput = document.getElementById('editInput');
+        const editPrioritySelect = document.getElementById('editPrioritySelect');
+        const closeModal = document.getElementById('closeModal');
+        const cancelEdit = document.getElementById('cancelEdit');
+        const saveEdit = document.getElementById('saveEdit');
+
+        let todos = [];
+        let darkMode = false;
+        let currentFilter = 'all';
+        let searchTerm = '';
+        let editingIndex = -1;
+
+        function saveTodos() { localStorage.setItem('todos', JSON.stringify(todos)); }
+        function saveMode() { localStorage.setItem('darkMode', JSON.stringify(darkMode)); }
+
+        function showBubble(text, x, y, type = 'default') {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble ' + type;
+            bubble.textContent = text;
+            bubble.style.left = Math.min(x - 80, window.innerWidth - 180) + 'px';
+            bubble.style.top = (y - 40) + 'px';
+            document.body.appendChild(bubble);
+            setTimeout(() => bubble.remove(), 2500);
+        }
+
+        function updateStats() {
+            const total = todos.length;
+            const completed = todos.filter(t => t.completed).length;
+            const pending = total - completed;
+            const rate = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+            document.getElementById('totalTasks').textContent = total;
+            document.getElementById('completedTasks').textContent = completed;
+            document.getElementById('pendingTasks').textContent = pending;
+            document.getElementById('completionRate').textContent = rate + '%';
+        }
+
+        function filterTodos() {
+            return todos.filter(todo => {
+                const matchFilter =
+                    currentFilter === 'all' ||
+                    (currentFilter === 'active' && !todo.completed) ||
+                    (currentFilter === 'completed' && todo.completed) ||
+                    (currentFilter === 'high' && todo.priority === 'high');
+
+                const matchSearch = todo.text.toLowerCase().includes(searchTerm.toLowerCase());
+
+                return matchFilter && matchSearch;
+            });
+        }
+
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+
+            if (minutes < 1) return 'Vừa xong';
+            if (minutes < 60) return minutes + ' phút trước';
+            if (hours < 24) return hours + ' giờ trước';
+            return days + ' ngày trước';
+        }
+
+        function render() {
+            const filtered = filterTodos();
+            todoList.innerHTML = '';
+
+            if (filtered.length === 0) {
+                emptyState.style.display = 'block';
+                todoList.style.display = 'none';
+            } else {
+                emptyState.style.display = 'none';
+                todoList.style.display = 'block';
+
+                filtered.forEach((todo) => {
+                    const originalIndex = todos.indexOf(todo);
+                    const li = document.createElement('li');
+                    if (todo.completed) li.classList.add('completed');
+                    li.classList.add('priority-' + todo.priority);
+
+                    const content = document.createElement('div');
+                    content.className = 'todo-content';
+
+                    const header = document.createElement('div');
+                    header.className = 'todo-header';
+
+                    const text = document.createElement('div');
+                    text.className = 'todo-text';
+                    text.textContent = todo.text;
+
+                    const badge = document.createElement('span');
+                    badge.className = 'priority-badge ' + todo.priority;
+                    const badgeText = todo.priority === 'high' ? 'Cao' : todo.priority === 'medium' ? 'TB' : 'Thấp';
+                    badge.textContent = badgeText;
+
+                    header.appendChild(text);
+                    header.appendChild(badge);
+
+                    const date = document.createElement('div');
+                    date.className = 'todo-date';
+                    date.textContent = formatDate(todo.timestamp);
+
+                    content.appendChild(header);
+                    content.appendChild(date);
+
+                    const actions = document.createElement('div');
+                    actions.className = 'todo-actions';
+
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'todo-btn';
+                    editBtn.innerHTML = '🥹;';
+                    editBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        editingIndex = originalIndex;
+                        editInput.value = todo.text;
+                        editPrioritySelect.value = todo.priority;
+                        editModal.classList.add('show');
+                    });
+
+                    const completeBtn = document.createElement('button');
+                    completeBtn.className = 'todo-btn';
+                    completeBtn.innerHTML = todo.completed ? '🥹' : '🥹';
+                    completeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        todos[originalIndex].completed = !todos[originalIndex].completed;
+                        if (todos[originalIndex].completed) {
+                            showBubble('Giỏi ghê 🥹!', e.pageX, e.pageY, 'success');
+                        } else {
+                            showBubble('Tiếp tục 🥹!', e.pageX, e.pageY, 'default');
+                        }
+                        saveTodos();
+                        updateStats();
+                        render();
+                    });
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'todo-btn';
+                    deleteBtn.innerHTML = '🥹';
+                    deleteBtn.style.color = 'var(--danger)';
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        showBubble('Hazz...', e.pageX, e.pageY, 'hazz');
+                        setTimeout(() => {
+                            todos.splice(originalIndex, 1);
+                            saveTodos();
+                            updateStats();
+                            render();
+                        }, 500);
+                    });
+
+                    actions.appendChild(editBtn);
+                    actions.appendChild(completeBtn);
+                    actions.appendChild(deleteBtn);
+
+                    li.appendChild(content);
+                    li.appendChild(actions);
+                    todoList.appendChild(li);
+                });
+            }
+
+            updateStats();
+        }
+
+        function addTodo() {
+            const text = todoInput.value.trim();
+            if (text) {
+                todos.unshift({
+                    text,
+                    completed: false,
+                    priority: prioritySelect.value,
+                    timestamp: Date.now()
+                });
+                saveTodos();
+                render();
+                todoInput.value = '';
+                showBubble('Đã thêm!', window.innerWidth / 2, 100, 'success');
+            }
+        }
+
+        addBtn.addEventListener('click', addTodo);
+        todoInput.addEventListener('keypress', e => {
+            if (e.key === 'Enter') addTodo();
+        });
+
+        statsBtn.addEventListener('click', () => {
+            statsPanel.classList.toggle('show');
+        });
+
+        modeToggle.addEventListener('click', () => {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark');
+            modeToggle.innerHTML = darkMode ? '🥹' : '🥹';
+            saveMode();
+        });
+
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentFilter = tab.dataset.filter;
+                render();
+            });
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            render();
+        });
+
+        closeModal.addEventListener('click', () => {
+            editModal.classList.remove('show');
+            editingIndex = -1;
+        });
+
+        cancelEdit.addEventListener('click', () => {
+            editModal.classList.remove('show');
+            editingIndex = -1;
+        });
+
+        editModal.addEventListener('click', (e) => {
+            if (e.target === editModal) {
+                editModal.classList.remove('show');
+                editingIndex = -1;
+            }
+        });
+
+        saveEdit.addEventListener('click', () => {
+            const text = editInput.value.trim();
+            if (text && editingIndex >= 0) {
+                todos[editingIndex].text = text;
+                todos[editingIndex].priority = editPrioritySelect.value;
+                saveTodos();
+                render();
+                editModal.classList.remove('show');
+                editingIndex = -1;
+                showBubble(' Đã lưu 🥹', window.innerWidth / 2, 100, 'success');
+            }
+        });
+
+        editInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') saveEdit.click();
+        });
+
+        try {
+            todos = JSON.parse(localStorage.getItem('todos')) || [];
+            darkMode = JSON.parse(localStorage.getItem('darkMode')) || false;
+            if (darkMode) {
+                document.body.classList.add('dark');
+                modeToggle.innerHTML = '🥹';
+            }
+        } catch (e) {
+            todos = [];
+            darkMode = false;
+        }
+
+        render();
+    </script>
+</body>
+
+</html>

@@ -442,7 +442,7 @@ body {
     animation: pulse-glow 1.8s infinite ease-in-out;
 }
 
-.facebook {
+.time {
     position: fixed;
     bottom: 35px;
     /* display: flex;
@@ -465,7 +465,7 @@ body {
     animation: pulse-glow 1.8s infinite ease-in-out;
 }
 
-.instagram {
+.todoapp {
     position: fixed;
     bottom: 120px;
     /* display: flex;
@@ -1683,7 +1683,7 @@ body.show-chatbot .chatbot-popup {
         animation: pulse-glow-strong 1.6s infinite ease-in-out;
     }
 
-    .instagram {
+    .todoapp {
         position: fixed;
         bottom: 176px;
         /* left: calc(50% - 30px);  nếu về 3 mục*/
@@ -1709,7 +1709,7 @@ body.show-chatbot .chatbot-popup {
         animation: pulse-glow-strong 1.6s infinite ease-in-out;
     }
 
-    .facebook {
+    .time {
         position: fixed;
         bottom: 176px;
         /* left: calc(50% - 30px);  nếu về 3 mục*/

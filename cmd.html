@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Command Prompt</title>
+    <link rel="icon" type="img" href="img/anh.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Consolas&display=swap');
 
@@ -284,7 +285,7 @@
                 </div>
             </div>
             <div class="cmd-body" id="terminal">
-                <div class="header-text">Microsoft Windows [Version 10.0.19045.3803]</div>
+                <div class="header-text">Microsoft Windows [Version 10.0.22631.6199]</div>
                 <div class="header-text">(c) Microsoft Corporation. All rights reserved.</div>
                 <div class="header-text" style="margin-bottom: 15px;"></div>
             </div>
@@ -293,25 +294,37 @@
 
     <!-- Audio -->
     <audio id="bgMusic">
-        <source src="img/yeutudaumara.mp4" type="audio/mpeg">
+        <source src="img/lalung.mp3" type="audio/mpeg">
     </audio>
 
     <script>
+        // const lyrics = [
+        //     { text: "Nắng còn vương vai", time: 0 },
+        //     { text: "Biết rằng ta sai", time: 0 },
+        //     { text: "Ta chẳng còn tương lai", time: 0 },
+        //     { text: "Em nỡ lòng yêu ai", time: 0 },
+        //     { text: "Cơn mưa rơi nghe hững hờ", time: 0 },
+        //     { text: "Em mang đến toàn bất ngờ", time: 0 },
+        //     { text: "Có ai vẫn mong, có trông, có chờ", time: 0 },
+        //     { text: "Vẫn vương, có mưa, vẫn trông, vẫn chờ", time: 0 },
+        //     { text: "Em ngang qua thật hững hờ", time: 0 },
+        //     { text: "Như tức nước anh vỡ bờ", time: 0 },
+        //     { text: "Có mơ thấy em, bóng ai, nhớ em", time: 0 },
+        //     { text: "Nhớ câu \"Love you\", \"Miss you\" từng hẹn thề", time: 0 }
+        // ];
         const lyrics = [
-            "Nắng còn vương vai",
-            "Biết rằng ta sai ",
-            "Ta chẳng còn tương lai",
-            "Em nỡ lòng yêu ai",
-            "Cơn mưa rơi nghe hững hờ",
-            "Em mang đến toàn bất ngờ",
-            "Có ai vẫn mong, có trông, có chờ",
-            "Vẫn vương, có mưa, vẫn trông, vẫn chờ",
-            "Em ngang qua thật hững hờ",
-            "Như tức nước anh vỡ bờ",
-            "Có mơ thấy em, bóng ai, nhớ em",
-            "Nhớ câu \"Love you\", \"Miss you\" từng hẹn thề"
+            "Chỉ tình cờ nhìn em rồi mang theo những cơn đau thét gào",
+            "Lạ lùng em tới",
+            "Hãy tới bên anh trong chiều đông xa vắng",
+            "Mà sao giờ đây nhìn lại chẳng còn thấy em?",
+            "Lạ lùng em với gió hát lên câu ca làm anh thao thức",
+            "Mà bao say mê nồng nàn giờ đã phai mau",
+            "Kìa nắng ngập tràn",
+            "Nhưng giấc mơ lại vừa bay đi",
+            "Gạt hết cuộc đời lẻ loi",
+            "Thôi mình anh",
+            "Lại ngồi nhớ em"
         ];
-
 
         const intro = document.getElementById('intro');
         const startBtn = document.getElementById('startBtn');
@@ -323,8 +336,8 @@
         let currentCharIndex = 0;
         let isTyping = false;
 
-        const typingSpeed = 145;
-        const pauseBetweenLines = 1500; // 2 giây giữa các câu
+        const typingSpeed = 260;
+        const pauseBetweenLines = 2000; // 2 giây giữa các câu
 
         // Start button click
         startBtn.addEventListener('click', () => {
@@ -339,7 +352,7 @@
         });
 
         function createPrompt() {
-            return `<span class="prompt">C:\\Users\\User> </span>`;
+            return `<span class="prompt">C:\\Windows\\System32> </span>`;
         }
 
         function typeCharacter() {

@@ -907,7 +907,7 @@ a {
 
 #bg-video {
     width: 100%;
-    max-width: 450px;
+    max-width: 550px;
     /* Giới hạn chiều rộng trên mobile */
     height: auto;
     object-fit: contain;

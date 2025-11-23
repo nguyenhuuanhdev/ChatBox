@@ -12,7 +12,8 @@ const closeChatbot = document.querySelector("#close-chatbot");
 //const API_KEY = "AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA"; // LINK LẤY API KEY: https://aistudio.google.com/apikey
 //const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 // api gemini 2.5
-const API_KEY = "AIzaSyC3La4s-4pr4_2tm8-ER48aIo9KyI-Ngj8"; // Khóa API của bạn
+// const API_KEY = "AIzaSyC3La4s-4pr4_2tm8-ER48aIo9KyI-Ngj8"; 
+const API_KEY = "AIzaSyAwOE13FGNQGMoUTZLFab41w4fnQQ3UN-E"; // Khóa API của bạn
 const NEW_MODEL_NAME = "gemini-2.5-flash"; // Thay đổi tên mô hình
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${NEW_MODEL_NAME}:generateContent?key=${API_KEY}`;
 

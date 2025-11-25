@@ -31,15 +31,30 @@ const closeChatbot = document.querySelector("#close-chatbot");
 // };
 // fix test apikey 
 
-async function askGemini(prompt) {
+const userData = {
+    message: null,
+    file: {
+        data: null,
+        mime_type: null
+    }
+};
+
+async function sendToGemini(message, fileData = null, mime = null) {
     const res = await fetch("/api/gemini", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            message: message,
+            file: fileData
+                ? { data: fileData, mime_type: mime }
+                : null
+        }),
     });
 
     const data = await res.json();
-    console.log(data);
+    return data;
 }
 
 

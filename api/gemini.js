@@ -1,10 +1,14 @@
 export default async function handler(req, res) {
-    const API_KEY = process.env.GEMINI_KEY;
+    const API_KEY = process.env.GEMINI_KEY; // key được giấu trong Vercel
 
-    if (!API_KEY) return res.status(500).json({ error: "Missing API Key" });
+    if (!API_KEY) {
+        return res.status(500).json({ error: "Missing API Key" });
+    }
 
     let body = "";
-    req.on("data", chunk => { body += chunk.toString(); });
+    req.on("data", chunk => {
+        body += chunk.toString();
+    });
 
     req.on("end", async () => {
         try {
@@ -18,7 +22,12 @@ export default async function handler(req, res) {
                         parts: [
                             { text: message || "" },
                             file?.data
-                                ? { inline_data: { data: file.data, mime_type: file.mime_type } }
+                                ? {
+                                    inline_data: {
+                                        data: file.data,
+                                        mime_type: file.mime_type,
+                                    }
+                                }
                                 : null
                         ].filter(Boolean)
                     }
@@ -28,7 +37,7 @@ export default async function handler(req, res) {
             const response = await fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
             });
 
             const result = await response.json();

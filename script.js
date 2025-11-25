@@ -36,6 +36,9 @@ const closeChatbot = document.querySelector("#close-chatbot");
 //test apikeypv  
 // Không dùng API key nữa — không được để key trong frontend
 
+// script.js
+
+// userData để giữ message + file
 const userData = {
     message: null,
     file: {
@@ -44,34 +47,59 @@ const userData = {
     }
 };
 
+// Hàm gửi message/file tới backend
 async function sendToGemini(message, fileData = null, mime = null) {
-    const res = await fetch("/api/gemini", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            message: message,
-            file: fileData ? { data: fileData, mime_type: mime } : null
-        }),
-    });
+    try {
+        const res = await fetch("/api/gemini", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                message: message,
+                file: fileData ? { data: fileData, mime_type: mime } : null
+            }),
+        });
 
-    if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || 'Unknown error');
+        if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.error || "Unknown error from server");
+        }
+
+        const data = await res.json();
+        return data;
+    } catch (err) {
+        console.error("Error sending to Gemini:", err.message);
+        throw err;
     }
-
-    const data = await res.json();
-    return data;
 }
 
-// Example usage
+// Ví dụ: gửi message khi nhấn nút
 document.querySelector("#sendBtn").addEventListener("click", async () => {
     const msg = document.querySelector("#messageInput").value;
+    if (!msg) return alert("Nhập message trước!");
+
     try {
         const response = await sendToGemini(msg);
         console.log("Gemini response:", response);
-    } catch (e) {
-        console.error(e.message);
+        document.querySelector("#responseOutput").textContent = JSON.stringify(response, null, 2);
+    } catch (err) {
+        document.querySelector("#responseOutput").textContent = "Error: " + err.message;
     }
+});
+
+// Ví dụ: đọc file input và convert sang base64
+document.querySelector("#fileInput").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+        const base64 = reader.result.split(",")[1]; // bỏ "data:mime;base64,"
+        userData.file = {
+            data: base64,
+            mime_type: file.type
+        };
+    };
+    reader.readAsDataURL(file);
 });
 
 //test apikeypv

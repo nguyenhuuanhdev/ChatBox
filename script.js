@@ -16,13 +16,12 @@ const closeChatbot = document.querySelector("#close-chatbot");
 
 // fix test apikey
 
-// const API_KEY = "AIzaSyBd-swBzuNiu221IFSXxQaR2enD7f-6BA0"; // Khóa API của bạn
+// const API_KEY = "AIzaSyBoBy6_sjov77KVsPD98BnJ8rCZzW6jFxg"; // Khóa API của bạn
 // const NEW_MODEL_NAME = "gemini-2.5-flash"; // Thay đổi tên mô hình
 // const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${NEW_MODEL_NAME}:generateContent?key=${API_KEY}`;
 
-// API_URL mới sẽ là: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA
-//api gemini 2.5
-
+// // API_URL mới sẽ là: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA
+// //api gemini 2.5
 // const userData = {
 //     message: null,
 //     file: {
@@ -30,80 +29,33 @@ const closeChatbot = document.querySelector("#close-chatbot");
 //         mime_type: null
 //     }
 // };
-
 // fix test apikey 
 
-//test apikeypv  
-// Không dùng API key nữa — không được để key trong frontend
-
-// script.js
-
-// userData để giữ message + file
-const userData = {
-    message: null,
-    file: {
-        data: null,
-        mime_type: null
-    }
-};
-
-// Hàm gửi message/file tới backend
+// Không dùng API key trong frontend
 async function sendToGemini(message, fileData = null, mime = null) {
-    try {
-        const res = await fetch("/api/gemini", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                message: message,
-                file: fileData ? { data: fileData, mime_type: mime } : null
-            }),
-        });
+    const res = await fetch("/api/gemini", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            message: message,
+            file: fileData ? { data: fileData, mime_type: mime } : null
+        })
+    });
 
-        if (!res.ok) {
-            const err = await res.json();
-            throw new Error(err.error || "Unknown error from server");
-        }
-
-        const data = await res.json();
-        return data;
-    } catch (err) {
-        console.error("Error sending to Gemini:", err.message);
-        throw err;
-    }
+    const data = await res.json();
+    return data;
 }
 
-// Ví dụ: gửi message khi nhấn nút
-document.querySelector("#sendBtn").addEventListener("click", async () => {
-    const msg = document.querySelector("#messageInput").value;
-    if (!msg) return alert("Nhập message trước!");
+// Kết nối với form cũ
+document.getElementById("chatForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const message = document.getElementById("msg").value;
 
-    try {
-        const response = await sendToGemini(msg);
-        console.log("Gemini response:", response);
-        document.querySelector("#responseOutput").textContent = JSON.stringify(response, null, 2);
-    } catch (err) {
-        document.querySelector("#responseOutput").textContent = "Error: " + err.message;
-    }
+    const data = await sendToGemini(message);
+    const output = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Không có phản hồi";
+
+    document.getElementById("response").innerText = output;
 });
-
-// Ví dụ: đọc file input và convert sang base64
-document.querySelector("#fileInput").addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-        const base64 = reader.result.split(",")[1]; // bỏ "data:mime;base64,"
-        userData.file = {
-            data: base64,
-            mime_type: file.type
-        };
-    };
-    reader.readAsDataURL(file);
-});
-
-//test apikeypv
-
 
 
 

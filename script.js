@@ -31,31 +31,33 @@ const closeChatbot = document.querySelector("#close-chatbot");
 // };
 // fix test apikey 
 
-// Không dùng API key trong frontend
+// Không dùng API key nữa — không được để key trong frontend
+
+const userData = {
+    message: null,
+    file: {
+        data: null,
+        mime_type: null
+    }
+};
+
 async function sendToGemini(message, fileData = null, mime = null) {
     const res = await fetch("/api/gemini", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify({
             message: message,
-            file: fileData ? { data: fileData, mime_type: mime } : null
-        })
+            file: fileData
+                ? { data: fileData, mime_type: mime }
+                : null
+        }),
     });
 
     const data = await res.json();
     return data;
 }
-
-// Kết nối với form cũ
-document.getElementById("chatForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const message = document.getElementById("msg").value;
-
-    const data = await sendToGemini(message);
-    const output = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Không có phản hồi";
-
-    document.getElementById("response").innerText = output;
-});
 
 
 

@@ -47,20 +47,32 @@ const userData = {
 async function sendToGemini(message, fileData = null, mime = null) {
     const res = await fetch("/api/gemini", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             message: message,
-            file: fileData
-                ? { data: fileData, mime_type: mime }
-                : null
+            file: fileData ? { data: fileData, mime_type: mime } : null
         }),
     });
+
+    if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Unknown error');
+    }
 
     const data = await res.json();
     return data;
 }
+
+// Example usage
+document.querySelector("#sendBtn").addEventListener("click", async () => {
+    const msg = document.querySelector("#messageInput").value;
+    try {
+        const response = await sendToGemini(msg);
+        console.log("Gemini response:", response);
+    } catch (e) {
+        console.error(e.message);
+    }
+});
 
 //test apikeypv
 

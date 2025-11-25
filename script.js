@@ -16,21 +16,12 @@ const closeChatbot = document.querySelector("#close-chatbot");
 
 // fix test apikey
 
-// const API_KEY = "AIzaSyBoBy6_sjov77KVsPD98BnJ8rCZzW6jFxg"; // Khóa API của bạn
-// const NEW_MODEL_NAME = "gemini-2.5-flash"; // Thay đổi tên mô hình
-// const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${NEW_MODEL_NAME}:generateContent?key=${API_KEY}`;
+const API_KEY = "AIzaSyBoBy6_sjov77KVsPD98BnJ8rCZzW6jFxg"; // Khóa API của bạn
+const NEW_MODEL_NAME = "gemini-2.5-flash"; // Thay đổi tên mô hình
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${NEW_MODEL_NAME}:generateContent?key=${API_KEY}`;
 
-// // API_URL mới sẽ là: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA
-// //api gemini 2.5
-// const userData = {
-//     message: null,
-//     file: {
-//         data: null,
-//         mime_type: null
-//     }
-// };
-// fix test apikey 
-
+// API_URL mới sẽ là: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA
+//api gemini 2.5
 const userData = {
     message: null,
     file: {
@@ -38,24 +29,7 @@ const userData = {
         mime_type: null
     }
 };
-
-async function sendToGemini(message, fileData = null, mime = null) {
-    const res = await fetch("/api/gemini", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            message: message,
-            file: fileData
-                ? { data: fileData, mime_type: mime }
-                : null
-        }),
-    });
-
-    const data = await res.json();
-    return data;
-}
+// fix test apikey 
 
 
 

@@ -31,32 +31,15 @@ const closeChatbot = document.querySelector("#close-chatbot");
 // };
 // fix test apikey 
 
-// Không dùng API key nữa — không được để key trong frontend
-
-const userData = {
-    message: null,
-    file: {
-        data: null,
-        mime_type: null
-    }
-};
-
-async function sendToGemini(message, fileData = null, mime = null) {
+async function askGemini(prompt) {
     const res = await fetch("/api/gemini", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            message: message,
-            file: fileData
-                ? { data: fileData, mime_type: mime }
-                : null
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt }),
     });
 
     const data = await res.json();
-    return data;
+    console.log(data);
 }
 
 

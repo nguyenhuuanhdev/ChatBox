@@ -9,7 +9,86 @@ const closeChatbot = document.querySelector("#close-chatbot");
 
 
 // Api setup
+const userData = { message: null, file: { data: null, mime_type: null } };
 
+// Chuyển file sang Base64
+const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(",")[1]); // lấy phần Base64
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+};
+
+// Gửi message + file lên Vercel
+async function sendToGemini(message, fileData = null, mime = null) {
+    const res = await fetch("/api/gemini", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            message,
+            file: fileData ? { data: fileData, mime_type: mime } : null
+        }),
+    });
+
+    const data = await res.json();
+    return data.text || "Bot không trả lời được 😢";
+}
+
+// Hiển thị message từ bot
+const appendBotMessage = (text) => {
+    const div = document.createElement("div");
+    div.classList.add("message", "bot-message");
+    div.innerHTML = `<img src="img/23.png" alt="Bot Avatar" class="bot-avatar" />
+                     <div class="message-text">${text}</div>`;
+    chatBody.appendChild(div);
+    chatBody.scrollTop = chatBody.scrollHeight;
+};
+
+// Xử lý gửi tin nhắn
+const handleSendMessage = async () => {
+    const message = messageInput.value.trim();
+    if (!message && !userData.file.data) return;
+
+    // Hiển thị tin nhắn user
+    const userDiv = document.createElement("div");
+    userDiv.classList.add("message", "user-message");
+    userDiv.innerHTML = `<div class="message-text">${message}</div>` +
+        (userData.file.data ? `<img src="data:${userData.file.mime_type};base64,${userData.file.data}" class="attachment" />` : "");
+    chatBody.appendChild(userDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    messageInput.value = "";
+    fileUploadWrapper.classList.remove("file-uploaded");
+
+    // Gọi API Gemini
+    const botReply = await sendToGemini(message, userData.file.data, userData.file.mime_type);
+    appendBotMessage(botReply);
+
+    // Reset file
+    userData.file = { data: null, mime_type: null };
+};
+
+// Chọn file upload
+fileInput.addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    userData.file.data = await fileToBase64(file);
+    userData.file.mime_type = file.type;
+    fileUploadWrapper.classList.add("file-uploaded");
+});
+
+// Gửi tin nhắn khi click nút
+sendMessageButton.addEventListener("click", handleSendMessage);
+
+// Gửi tin nhắn khi nhấn Enter
+messageInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        handleSendMessage();
+    }
+});
 // api gemini 2.5
 // const API_KEY = "AIzaSyC3La4s-4pr4_2tm8-ER48aIo9KyI-Ngj8"; 
 
@@ -35,13 +114,13 @@ async function sendToGemini(message, fileData = null, mime = null) {
 
 // API_URL mới sẽ là: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA
 //api gemini 2.5
-const userData = {
-    message: null,
-    file: {
-        data: null,
-        mime_type: null
-    }
-};
+// const userData = {
+//     message: null,
+//     file: {
+//         data: null,
+//         mime_type: null
+//     }
+// };
 
 
 

@@ -9,16 +9,25 @@ const closeChatbot = document.querySelector("#close-chatbot");
 
 
 // Api setup
-// const API_KEY = "AIzaSyA-4xGIv7uyU9OViJ_14hatkJ9e_HMsw1o"; // LINK LẤY API KEY: https://aistudio.google.com/apikey
-// const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+
 // api gemini 2.5
 // const API_KEY = "AIzaSyC3La4s-4pr4_2tm8-ER48aIo9KyI-Ngj8"; 
 
 // fix test apikey
-// Gọi backend proxy thay vì gọi Google trực tiếp
-const API_URL = "http://nguyenhuuanh.vercel.app";
+async function sendToGemini(message, fileData = null, mime = null) {
+    const res = await fetch("/api/gemini", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            message,
+            file: fileData
+                ? { data: fileData, mime_type: mime }
+                : null
+        }),
+    });
 
-
+    return await res.json();
+}
 
 //const API_KEY = "AIzaSyBoBy6_sjov77KVsPD98BnJ8rCZzW6jFxg"; // Khóa API của bạn
 //const NEW_MODEL_NAME = "gemini-2.5-flash"; // Thay đổi tên mô hình
@@ -133,60 +142,45 @@ const createMessageElement = (content, ...classes) => {
 const generateBotResponse = async (incomingMessageDiv) => {
     const messageElement = incomingMessageDiv.querySelector(".message-text");
 
-    // Đẩy user message vào lịch sử trước khi gửi
+
+
     chatHistory.push({
         role: "user",
-        parts: [{ text: userData.message }, ...(userData.file && userData.file.data ? [{ inline_data: userData.file }] : [])],
+        parts: [{ text: userData.message }, ...(userData.file.data ? [{ inline_data: userData.file }] : [])],
     });
 
-    // Tạo request tới backend (backend sẽ forward tới Google)
+    // API request options
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            // backend mình đã viết nhận nguyên payload này và forward đến Google
             contents: chatHistory
-        }),
-    };
+        })
+    }
 
     try {
-        const response = await fetch(API_URL, requestOptions);
-
-        // Nếu backend trả lỗi (status >= 400), đọc body để lấy message
-        if (!response.ok) {
-            const errBody = await response.json().catch(() => ({}));
-            throw new Error(errBody.error?.message || JSON.stringify(errBody) || `HTTP ${response.status}`);
-        }
+        // Fetch bot response from API
+        const response = await fetch("/api/gemini", requestOptions);
 
         const data = await response.json();
+        if (!response.ok) throw new Error(data.error.message);
 
-        // Nếu backend forward nguyên response Google, phần text nằm trong data.candidates...
-        const apiResponseText = (
-            (data?.candidates && data.candidates[0]?.content?.parts && data.candidates[0].content.parts[0]?.text) ||
-            (data?.output?.[0]?.content?.[0]?.text) || // fallback nếu cấu trúc khác
-            ""
-        );
-
-        // Remove markdown bold **...** nếu có và trim
-        const cleanText = apiResponseText.replace(/\*\*(.*?)\*\*/g, "$1").trim();
-
-        messageElement.innerText = cleanText || "(Không có phản hồi từ bot)";
+        // Extract and display bot's response text
+        const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
+        messageElement.innerText = apiResponseText;
         chatHistory.push({
             role: "model",
-            parts: [{ text: cleanText }]
+            parts: [{ text: apiResponseText }]
         });
     } catch (error) {
-        console.error("generateBotResponse error:", error);
-        messageElement.innerText = `Lỗi: ${error.message || error}`;
+        messageElement.innerText = error.message;
         messageElement.style.color = "#ff0000";
     } finally {
-        // reset file data, remove thinking state, cuộn chat xuống cuối
-        userData.file = { data: null, mime_type: null };
+        userData.file = {};
         incomingMessageDiv.classList.remove("thinking");
         chatBody.scrollTo({ behavior: "smooth", top: chatBody.scrollHeight });
     }
 };
-
 
 // Handle outgoing user message
 const handleOutgoingMessage = (e) => {

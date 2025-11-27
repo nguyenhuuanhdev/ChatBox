@@ -9,8 +9,8 @@ const closeChatbot = document.querySelector("#close-chatbot");
 
 
 // Api setup
-//const API_KEY = "AIzaSyA-AIzaSyAUxcIavanO5NQfHoh6W_WUusjs9dN_g7E"; // LINK LẤY API KEY: https://aistudio.google.com/apikey
-//const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+const API_KEY = "AIzaSyA-4xGIv7uyU9OViJ_14hatkJ9e_HMsw1o"; // LINK LẤY API KEY: https://aistudio.google.com/apikey
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 // api gemini 2.5
 // const API_KEY = "AIzaSyC3La4s-4pr4_2tm8-ER48aIo9KyI-Ngj8"; 
 
@@ -22,30 +22,14 @@ const closeChatbot = document.querySelector("#close-chatbot");
 
 // API_URL mới sẽ là: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA
 //api gemini 2.5
-const userData = { message: null, file: { data: null, mime_type: null } };
+const userData = {
+    message: null,
+    file: {
+        data: null,
+        mime_type: null
+    }
+};
 
-// Chuyển file sang Base64
-const fileToBase64 = (file) => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result.split(",")[1]);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-});
-
-// Gửi message + file lên backend
-async function sendToGemini(message, fileData = null, mime = null) {
-    const res = await fetch("/api/gemini", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            message,
-            file: fileData ? { data: fileData, mime_type: mime } : null
-        }),
-    });
-
-    const data = await res.json();
-    return data.text || "Bot không trả lời được 😢";
-}
 
 
 

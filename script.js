@@ -166,7 +166,7 @@ const generateBotResponse = async (incomingMessageDiv) => {
         if (!response.ok) throw new Error(data.error.message);
 
         // Extract and display bot's response text
-        const apiResponseText = data.text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
+        const apiResponseText = (data.text || "Xin lỗi, bot không trả lời được").replace(/\*\*(.*?)\*\*/g, "$1").trim();
 
         messageElement.innerText = apiResponseText;
         chatHistory.push({

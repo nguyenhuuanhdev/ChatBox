@@ -16,7 +16,8 @@ const closeChatbot = document.querySelector("#close-chatbot");
 
 // fix test apikey
 // Gọi backend proxy thay vì gọi Google trực tiếp
-const API_URL = "http://localhost:3000/api/chat";
+const API_URL = "https://nguyenhuuanh.vercel.app/api/chat";
+
 
 
 

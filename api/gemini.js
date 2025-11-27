@@ -42,7 +42,7 @@ export default async function handler(req, res) {
         // Lấy text trả về từ API (nếu có candidates)
         const botText =
             data?.candidates?.[0]?.content?.[0]?.text ||
-            "Xin lỗi, Gemini API không trả về gì.";
+            "Hicc. Google fix chatbot roii cau aa.";
 
         return res.status(200).json({ text: botText });
     } catch (err) {

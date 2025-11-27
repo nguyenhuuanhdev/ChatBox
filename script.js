@@ -9,7 +9,8 @@ const closeChatbot = document.querySelector("#close-chatbot");
 
 
 // Api setup
-
+//const API_KEY = "AIzaSyA-AIzaSyAUxcIavanO5NQfHoh6W_WUusjs9dN_g7E"; // LINK LẤY API KEY: https://aistudio.google.com/apikey
+//const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 // api gemini 2.5
 // const API_KEY = "AIzaSyC3La4s-4pr4_2tm8-ER48aIo9KyI-Ngj8"; 
 
@@ -21,28 +22,17 @@ const closeChatbot = document.querySelector("#close-chatbot");
 
 // API_URL mới sẽ là: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA
 //api gemini 2.5
-// const userData = {
-//     message: null,
-//     file: {
-//         data: null,
-//         mime_type: null
-//     }
-// };
-
-
 const userData = { message: null, file: { data: null, mime_type: null } };
 
 // Chuyển file sang Base64
-const fileToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result.split(",")[1]); // lấy Base64
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-};
+const fileToBase64 = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+});
 
-// Gửi message + file lên Vercel
+// Gửi message + file lên backend
 async function sendToGemini(message, fileData = null, mime = null) {
     const res = await fetch("/api/gemini", {
         method: "POST",
@@ -57,80 +47,7 @@ async function sendToGemini(message, fileData = null, mime = null) {
     return data.text || "Bot không trả lời được 😢";
 }
 
-// Append bot message
-const appendBotMessage = (text) => {
-    const div = document.createElement("div");
-    div.classList.add("message", "bot-message");
-    div.innerHTML = `<img src="img/23.png" alt="Bot Avatar" class="bot-avatar" />
-                     <div class="message-text">${text}</div>`;
-    chatBody.appendChild(div);
-    chatBody.scrollTop = chatBody.scrollHeight;
-};
 
-// Append user message
-const appendUserMessage = (message, file) => {
-    const div = document.createElement("div");
-    div.classList.add("message", "user-message");
-    div.innerHTML = `<div class="message-text">${message}</div>` +
-        (file ? `<img src="data:${file.mime_type};base64,${file.data}" class="attachment" />` : "");
-    chatBody.appendChild(div);
-    chatBody.scrollTop = chatBody.scrollHeight;
-};
-
-// Gửi tin nhắn
-const handleSendMessage = async () => {
-    const message = messageInput.value.trim();
-    if (!message && !userData.file.data) return;
-
-    // Hiển thị message user
-    appendUserMessage(message, userData.file.data ? userData.file : null);
-
-    // Reset input
-    messageInput.value = "";
-    fileUploadWrapper.classList.remove("file-uploaded");
-
-    // Thinking indicator
-    const thinkingDiv = document.createElement("div");
-    thinkingDiv.classList.add("message", "bot-message", "thinking");
-    thinkingDiv.innerHTML = `<img src="img/23.png" alt="Bot Avatar" class="bot-avatar" />
-                             <div class="message-text">
-                               <div class="thinking-indicator">
-                                 <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-                               </div>
-                             </div>`;
-    chatBody.appendChild(thinkingDiv);
-    chatBody.scrollTop = chatBody.scrollHeight;
-
-    // Gọi API
-    const botReply = await sendToGemini(message, userData.file.data, userData.file.mime_type);
-
-    // Xóa thinking indicator và hiển thị bot reply
-    thinkingDiv.remove();
-    appendBotMessage(botReply);
-
-    // Reset file
-    userData.file = { data: null, mime_type: null };
-};
-
-// File input
-fileInput.addEventListener("change", async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    userData.file.data = await fileToBase64(file);
-    userData.file.mime_type = file.type;
-    fileUploadWrapper.classList.add("file-uploaded");
-});
-
-// Click nút gửi
-sendMessageButton.addEventListener("click", handleSendMessage);
-
-// Enter gửi message
-messageInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        handleSendMessage();
-    }
-});
 
 
 

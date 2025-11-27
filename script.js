@@ -16,7 +16,8 @@ const closeChatbot = document.querySelector("#close-chatbot");
 
 // fix test apikey
 // Gọi backend proxy thay vì gọi Google trực tiếp
-const API_URL = "/api/chat";
+const API_URL = "http://localhost:3000/api/chat";
+
 
 
 //const API_KEY = "AIzaSyBoBy6_sjov77KVsPD98BnJ8rCZzW6jFxg"; // Khóa API của bạn

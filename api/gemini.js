@@ -11,14 +11,14 @@ export default async function handler(req, res) {
         if (file?.data) {
             parts.push({
                 inline_data: {
-                    data: file.data, // đảm bảo đây là base64
+                    data: file.data, // Base64
                     mime_type: file.mime_type,
                 },
             });
         }
         if (message) parts.push({ text: message });
 
-        const result = await fetch(
+        const response = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
             {
                 method: "POST",
@@ -27,8 +27,8 @@ export default async function handler(req, res) {
             }
         );
 
-        const text = await result.text();
-        console.log("Gemini response:", text);
+        const text = await response.text();
+        console.log("Gemini raw response:", text);
 
         let data;
         try {
@@ -37,7 +37,12 @@ export default async function handler(req, res) {
             return res.status(500).json({ error: "Invalid JSON from Gemini API", raw: text });
         }
 
-        return res.status(200).json({ output: data });
+        // Trả về chuẩn để frontend dễ lấy text
+        const botText =
+            data?.candidates?.[0]?.content?.[0]?.text ||
+            "Xin lỗi, Gemini API không trả về gì.";
+
+        return res.status(200).json({ text: botText });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: "Server Error" });

@@ -9,13 +9,34 @@ const closeChatbot = document.querySelector("#close-chatbot");
 
 
 // Api setup
+
+// api gemini 2.5
+// const API_KEY = "AIzaSyC3La4s-4pr4_2tm8-ER48aIo9KyI-Ngj8"; 
+
+// fix test apikey
+
+//const API_KEY = "AIzaSyBoBy6_sjov77KVsPD98BnJ8rCZzW6jFxg"; // Khóa API của bạn
+//const NEW_MODEL_NAME = "gemini-2.5-flash"; // Thay đổi tên mô hình
+//const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${NEW_MODEL_NAME}:generateContent?key=${API_KEY}`;
+
+// API_URL mới sẽ là: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA
+//api gemini 2.5
+// const userData = {
+//     message: null,
+//     file: {
+//         data: null,
+//         mime_type: null
+//     }
+// };
+
+
 const userData = { message: null, file: { data: null, mime_type: null } };
 
 // Chuyển file sang Base64
 const fileToBase64 = (file) => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = () => resolve(reader.result.split(",")[1]); // lấy phần Base64
+        reader.onload = () => resolve(reader.result.split(",")[1]); // lấy Base64
         reader.onerror = reject;
         reader.readAsDataURL(file);
     });
@@ -36,7 +57,7 @@ async function sendToGemini(message, fileData = null, mime = null) {
     return data.text || "Bot không trả lời được 😢";
 }
 
-// Hiển thị message từ bot
+// Append bot message
 const appendBotMessage = (text) => {
     const div = document.createElement("div");
     div.classList.add("message", "bot-message");
@@ -46,31 +67,52 @@ const appendBotMessage = (text) => {
     chatBody.scrollTop = chatBody.scrollHeight;
 };
 
-// Xử lý gửi tin nhắn
+// Append user message
+const appendUserMessage = (message, file) => {
+    const div = document.createElement("div");
+    div.classList.add("message", "user-message");
+    div.innerHTML = `<div class="message-text">${message}</div>` +
+        (file ? `<img src="data:${file.mime_type};base64,${file.data}" class="attachment" />` : "");
+    chatBody.appendChild(div);
+    chatBody.scrollTop = chatBody.scrollHeight;
+};
+
+// Gửi tin nhắn
 const handleSendMessage = async () => {
     const message = messageInput.value.trim();
     if (!message && !userData.file.data) return;
 
-    // Hiển thị tin nhắn user
-    const userDiv = document.createElement("div");
-    userDiv.classList.add("message", "user-message");
-    userDiv.innerHTML = `<div class="message-text">${message}</div>` +
-        (userData.file.data ? `<img src="data:${userData.file.mime_type};base64,${userData.file.data}" class="attachment" />` : "");
-    chatBody.appendChild(userDiv);
-    chatBody.scrollTop = chatBody.scrollHeight;
+    // Hiển thị message user
+    appendUserMessage(message, userData.file.data ? userData.file : null);
 
+    // Reset input
     messageInput.value = "";
     fileUploadWrapper.classList.remove("file-uploaded");
 
-    // Gọi API Gemini
+    // Thinking indicator
+    const thinkingDiv = document.createElement("div");
+    thinkingDiv.classList.add("message", "bot-message", "thinking");
+    thinkingDiv.innerHTML = `<img src="img/23.png" alt="Bot Avatar" class="bot-avatar" />
+                             <div class="message-text">
+                               <div class="thinking-indicator">
+                                 <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                               </div>
+                             </div>`;
+    chatBody.appendChild(thinkingDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    // Gọi API
     const botReply = await sendToGemini(message, userData.file.data, userData.file.mime_type);
+
+    // Xóa thinking indicator và hiển thị bot reply
+    thinkingDiv.remove();
     appendBotMessage(botReply);
 
     // Reset file
     userData.file = { data: null, mime_type: null };
 };
 
-// Chọn file upload
+// File input
 fileInput.addEventListener("change", async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -79,51 +121,16 @@ fileInput.addEventListener("change", async (e) => {
     fileUploadWrapper.classList.add("file-uploaded");
 });
 
-// Gửi tin nhắn khi click nút
+// Click nút gửi
 sendMessageButton.addEventListener("click", handleSendMessage);
 
-// Gửi tin nhắn khi nhấn Enter
+// Enter gửi message
 messageInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         handleSendMessage();
     }
 });
-// api gemini 2.5
-// const API_KEY = "AIzaSyC3La4s-4pr4_2tm8-ER48aIo9KyI-Ngj8"; 
-
-// fix test apikey
-async function sendToGemini(message, fileData = null, mime = null) {
-    const res = await fetch("/api/gemini", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            message,
-            file: fileData
-                ? { data: fileData, mime_type: mime }
-                : null
-        }),
-    });
-
-    return await res.json();
-}
-
-//const API_KEY = "AIzaSyBoBy6_sjov77KVsPD98BnJ8rCZzW6jFxg"; // Khóa API của bạn
-//const NEW_MODEL_NAME = "gemini-2.5-flash"; // Thay đổi tên mô hình
-//const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${NEW_MODEL_NAME}:generateContent?key=${API_KEY}`;
-
-// API_URL mới sẽ là: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyCtyZiNnUtSoQCdgozybOjhbRwTQCDAoKA
-//api gemini 2.5
-// const userData = {
-//     message: null,
-//     file: {
-//         data: null,
-//         mime_type: null
-//     }
-// };
-
-
-
 
 
 
@@ -239,14 +246,12 @@ const generateBotResponse = async (incomingMessageDiv) => {
 
     try {
         // Fetch bot response from API
-        const response = await fetch("/api/gemini", requestOptions);
-
+        const response = await fetch(API_URL, requestOptions);
         const data = await response.json();
         if (!response.ok) throw new Error(data.error.message);
 
         // Extract and display bot's response text
-        const apiResponseText = (data.text || "Xin lỗi, bot không trả lời được").replace(/\*\*(.*?)\*\*/g, "$1").trim();
-
+        const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
         messageElement.innerText = apiResponseText;
         chatHistory.push({
             role: "model",

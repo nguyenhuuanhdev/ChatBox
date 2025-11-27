@@ -1,43 +1,37 @@
-// /api/gemini.js
 export default async function handler(req, res) {
     if (req.method !== "POST") {
+        res.setHeader("Allow", ["POST"]);
         return res.status(405).json({ error: "Method Not Allowed" });
     }
 
-    const API_KEY = process.env.GEMINI_API_KEY;
-
     try {
-        const { message, file } = req.body;
+        const body = req.body;
+        if (!body || !body.file || !body.file.data || body.file.data.length === 0) {
+            return res.status(400).json({ error: "File data missing" });
+        }
 
-        const result = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
-            {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    contents: [
-                        {
-                            parts: [
-                                file?.data
-                                    ? {
-                                        inline_data: {
-                                            data: file.data,
-                                            mime_type: file.mime_type,
-                                        },
-                                    }
-                                    : null,
-                                { text: message || "" },
-                            ].filter(Boolean),
-                        },
-                    ],
-                }),
-            }
-        );
+        // Ví dụ gọi API bên ngoài
+        const externalRes = await fetch("EXTERNAL_API_URL", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${process.env.API_KEY}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        });
 
-        const data = await result.json();
-        return res.status(200).json({ output: data });
+        const text = await externalRes.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch {
+            data = { raw: text };
+        }
+
+        res.status(200).json(data);
+
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ error: "Server Error" });
+        res.status(500).json({ error: "Server error" });
     }
 }

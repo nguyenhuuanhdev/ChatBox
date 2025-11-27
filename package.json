@@ -9,9 +9,18 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nguyenhuuanhdev/ChatBox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nguyenhuuanhdev/ChatBox/issues"
+  },
+  "homepage": "https://github.com/nguyenhuuanhdev/ChatBox#readme",
+  "description": ""
 }

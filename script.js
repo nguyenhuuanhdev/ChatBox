@@ -7,25 +7,17 @@ const fileCancelButton = document.querySelector("#file-cancel");
 const chatbotToggler = document.querySelector("#chatbot-toggler");
 const closeChatbot = document.querySelector("#close-chatbot");
 
-const BACKEND_URL = "https://nguyenhuuanh.vercel.app/api/gemini";
+const BACKEND_URL = "api/gemini";
 
-
-async function sendToGemini(message) {
+async function sendToGemini(message, fileData = null, mime = null) {
     const res = await fetch(BACKEND_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            message: message,
-            file: userData.file
-        })
+        body: JSON.stringify({ message, fileData, mime })
     });
+
     return await res.json();
 }
-
-
-// Khi gửi message:
-const message = messageInput.value.trim();
-const response = await sendToGemini(message);
 
 // Api setup
 //const API_KEY = "AIzaSyA-4xGIv7uyU9OViJ_14hatkJ9e_HMsw1o"; // LINK LẤY API KEY: https://aistudio.google.com/apikey
@@ -172,13 +164,7 @@ const generateBotResponse = async (incomingMessageDiv) => {
         if (!response.ok) throw new Error(data.error.message);
 
         // Extract and display bot's response text
-        let apiResponseText = "";
-        if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
-            apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
-        } else {
-            apiResponseText = "❌ API không trả dữ liệu hợp lệ";
-        }
-
+        const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
         messageElement.innerText = apiResponseText;
         chatHistory.push({
             role: "model",

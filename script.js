@@ -14,11 +14,14 @@ async function sendToGemini(message, fileData = null, mime = null) {
     const res = await fetch(BACKEND_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message, fileData, mime })
+        body: JSON.stringify({ message, file })
     });
-
     return await res.json();
 }
+
+// Khi gửi message:
+const message = messageInput.value.trim();
+const response = await sendToGemini(message);
 
 // Api setup
 //const API_KEY = "AIzaSyA-4xGIv7uyU9OViJ_14hatkJ9e_HMsw1o"; // LINK LẤY API KEY: https://aistudio.google.com/apikey

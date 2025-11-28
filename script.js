@@ -7,10 +7,22 @@ const fileCancelButton = document.querySelector("#file-cancel");
 const chatbotToggler = document.querySelector("#chatbot-toggler");
 const closeChatbot = document.querySelector("#close-chatbot");
 
+const BACKEND_URL = "https://nguyenhuuanh.vercel.app/api/gemini";
+
+
+async function sendToGemini(message, fileData = null, mime = null) {
+    const res = await fetch(BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message, fileData, mime })
+    });
+
+    return await res.json();
+}
 
 // Api setup
-const API_KEY = "AIzaSyA-4xGIv7uyU9OViJ_14hatkJ9e_HMsw1o"; // LINK LẤY API KEY: https://aistudio.google.com/apikey
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+//const API_KEY = "AIzaSyA-4xGIv7uyU9OViJ_14hatkJ9e_HMsw1o"; // LINK LẤY API KEY: https://aistudio.google.com/apikey
+//const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 // api gemini 2.5
 // const API_KEY = "AIzaSyC3La4s-4pr4_2tm8-ER48aIo9KyI-Ngj8"; 
 
@@ -147,7 +159,8 @@ const generateBotResponse = async (incomingMessageDiv) => {
 
     try {
         // Fetch bot response from API
-        const response = await fetch(API_URL, requestOptions);
+        const response = await fetch(BACKEND_URL, requestOptions);
+
         const data = await response.json();
         if (!response.ok) throw new Error(data.error.message);
 

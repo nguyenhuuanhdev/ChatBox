@@ -149,8 +149,9 @@ const generateBotResponse = async (incomingMessageDiv) => {
         const res = await fetch(BACKEND_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: userData.message })
+            body: JSON.stringify({ chatHistory })
         });
+
 
         const data = await res.json();
 

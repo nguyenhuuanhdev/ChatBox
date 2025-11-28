@@ -1,12 +1,20 @@
 export default async function handler(req, res) {
-    if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
+    if (req.method !== "POST")
+        return res.status(405).json({ error: "Method not allowed" });
 
     try {
-        const { message } = req.body;
+        const { chatHistory } = req.body;
 
-        if (!message || message.trim() === "") {
-            return res.status(400).json({ error: "Message is empty" });
+        if (!chatHistory || !Array.isArray(chatHistory) || chatHistory.length === 0) {
+            return res.status(400).json({ error: "chatHistory is empty or invalid" });
         }
+
+        // Chuyển chatHistory thành định dạng Gemini
+        const contents = chatHistory.map(msg => ({
+            parts: msg.parts.map(p => ({
+                text: p.text
+            }))
+        }));
 
         // Gọi API Gemini 2.5
         const apiRes = await fetch(
@@ -14,12 +22,7 @@ export default async function handler(req, res) {
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    // Đảm bảo cấu trúc luôn có candidates[0].content.parts[0].text
-                    contents: [
-                        { parts: [{ text: message }] }
-                    ]
-                })
+                body: JSON.stringify({ contents })
             }
         );
 

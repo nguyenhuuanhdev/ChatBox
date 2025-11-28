@@ -7,7 +7,7 @@ const fileCancelButton = document.querySelector("#file-cancel");
 const chatbotToggler = document.querySelector("#chatbot-toggler");
 const closeChatbot = document.querySelector("#close-chatbot");
 
-const BACKEND_URL = "api/gemini";
+const BACKEND_URL = "/api/gemini";
 
 async function sendToGemini(message, fileData = null, mime = null) {
     const res = await fetch(BACKEND_URL, {

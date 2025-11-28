@@ -164,8 +164,14 @@ const generateBotResponse = async (incomingMessageDiv) => {
         if (!response.ok) throw new Error(data.error.message);
 
         // Extract and display bot's response text
-        const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
+        let apiResponseText = "Bot không trả lời được 😢";
+
+        if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+            apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
+        }
+
         messageElement.innerText = apiResponseText;
+
         chatHistory.push({
             role: "model",
             parts: [{ text: apiResponseText }]

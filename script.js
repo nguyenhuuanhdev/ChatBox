@@ -19,7 +19,7 @@ async function sendToGemini(message, fileData = null, mime = null) {
     return await res.json();
 }
 
-// Api setup
+// Api setup ...
 
 const userData = {
     message: null,

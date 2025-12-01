@@ -10,13 +10,22 @@ const closeChatbot = document.querySelector("#close-chatbot");
 const BACKEND_URL = "/api/gemini";
 
 async function sendToGemini(message, fileData = null, mime = null) {
+    // Gói message vào mảng chatHistory
+    const chatHistory = [
+        {
+            role: "user",
+            parts: [{ text: message }, ...(fileData ? [{ inline_data: { data: fileData, mime_type: mime } }] : [])]
+        }
+    ];
+
     const res = await fetch(BACKEND_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message, fileData, mime })
+        body: JSON.stringify({ chatHistory })
     });
 
-    return await res.json();
+    const data = await res.json();
+    return data; // data.reply và data.raw
 }
 
 // Api setup ...
@@ -128,42 +137,42 @@ const createMessageElement = (content, ...classes) => {
 const generateBotResponse = async (incomingMessageDiv) => {
     const messageElement = incomingMessageDiv.querySelector(".message-text");
 
+    // Thêm message user vào chatHistory
     chatHistory.push({
         role: "user",
         parts: [{ text: userData.message }, ...(userData.file.data ? [{ inline_data: userData.file }] : [])],
     });
 
+    console.log("📤 Gửi lên server:", JSON.stringify(chatHistory, null, 2));
+
     try {
+        // Gọi API Gemini 2.5
         const res = await fetch(BACKEND_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ chatHistory })
         });
 
-
         const data = await res.json();
+        console.log("📥 Response data:", JSON.stringify(data, null, 2));
 
-        // Kiểm tra data trước khi dùng
-        let apiResponseText = "Xin lỗi, bot chưa trả lời được 😢";
-        if (data.candidates && data.candidates.length > 0 &&
-            data.candidates[0].content && data.candidates[0].content.parts &&
-            data.candidates[0].content.parts.length > 0 &&
-            data.candidates[0].content.parts[0].text
-        ) {
-            apiResponseText = data.candidates[0].content.parts[0].text.trim();
-        }
+        // Lấy reply từ backend
+        let apiResponseText = data.reply || "Xin lỗi, bot chưa trả lời được 😢";
 
         messageElement.innerText = apiResponseText;
 
+        // Thêm reply của bot vào chatHistory
         chatHistory.push({
             role: "model",
             parts: [{ text: apiResponseText }]
         });
 
     } catch (err) {
-        messageElement.innerText = "❌ Lỗi server: " + err.message;
+        console.error("💥 Exception:", err);
+        messageElement.innerText = "❌ Lỗi kết nối: " + err.message;
         messageElement.style.color = "#ff0000";
     } finally {
+        // Reset file upload và bỏ trạng thái thinking
         userData.file = {};
         incomingMessageDiv.classList.remove("thinking");
         chatBody.scrollTo({ behavior: "smooth", top: chatBody.scrollHeight });
